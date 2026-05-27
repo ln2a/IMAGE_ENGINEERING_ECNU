@@ -1,0 +1,75 @@
+# book.yml — 新书配置文件，复制此模板并填写
+# 运行: minerupress export book.yml      （直接导出已有 MinerU 结果）
+# 运行: minerupress fetch  book.yml      （按 source 准备来源，再导出）
+
+# 数据来源：
+# - uploaded_result: 已经放到 mineru_root 下的 MinerU 解析结果（模板默认）
+# - official_api: MinerU 官方 API，适合从 PDF 开始
+# - local_toolchain: 你自己单独安装的本地 MinerU CLI
+source: uploaded_result
+
+# MinerU 输出根目录（包含各分册子目录）
+mineru_root: resources/mineru
+
+# MkDocs docs/ 目录
+docs_out: docs
+
+# 单本书或单个 PDF 的逻辑分册 UID。章节不写 volume_uid 时默认使用它。
+volume_uid: image-engineering
+
+# 目录页过滤阈值。仅在查找每个逻辑 UID 的第一个章节边界时，
+# 忽略 page_idx 小于该值的标题匹配；设为 0 可关闭过滤。
+toc_max_page: 3
+
+# 默认严格模式：任一章节边界找不到就失败，避免静默生成错位章节。
+allow_missing_boundaries: True
+
+# 启用的插件
+plugins:
+  - qr_filter
+  - cjk_spacing
+
+# 章节列表 - 根据 PPT 的 5 个部分划分
+chapters:
+  - slug: ch01-image-formation
+    title: 第一部分 图像形成与数字图像基础
+    start_pattern: 图像从哪里来
+  - slug: ch02-enhancement
+    title: 第二部分 图像增强与滤波
+    start_pattern: 第二部分.*图像增强与滤波
+  - slug: ch03-sharpening
+    title: 第三部分 锐化与边缘检测
+    start_pattern: 第三部分.*锐化与边缘检测
+  - slug: ch04-segmentation
+    title: 第四部分 图像分割
+    start_pattern: 第四部分.*图像分割
+  - slug: ch05-features
+    title: 第五部分 图像特征与目标识别
+    start_pattern: 第五部分.*图像特征与目标识别
+
+# ── 可选：MinerU 云端 API ──────────────────────────────────────────────────
+# 仅当 source: official_api 时使用。
+# 敏感值（token）推荐写在 .env 文件中，不要提交到 git。
+#
+# source: official_api
+# api:
+#   token: ""                    # 留空则读取 MINERU_API_TOKEN 环境变量
+#   enable_formula: true
+#   enable_table: true
+#   model_version: vlm
+#   sources:                     # volume_uid前缀 → 本地 PDF 路径
+#     my-book: resources/pdfs/book.pdf
+#   # 单 PDF 超过 API 页数限制时会自动拆分成 my-book_part1、my-book_part2...
+#   # 章节仍可全部使用同一个 volume_uid，不需要手工维护 part UID。
+# ──────────────────────────────────────────────────────────────────────────
+
+# ── 可选：Cloudflare Pages 部署 ────────────────────────────────────────────
+# 在 plugins 中加入 cf_pages 后，每次 minerupress export 完成会自动部署。
+# CLOUDFLARE_ACCOUNT_ID 和 CLOUDFLARE_API_TOKEN 写在 .env 中。
+#
+# deploy:
+#   pages_project: my-book       # 留空则读取 PAGES_PROJECT 环境变量
+#   site_dir: site
+#   branch: main
+#   wrangler_cmd: npx wrangler
+# ──────────────────────────────────────────────────────────────────────────

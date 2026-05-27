@@ -1,0 +1,750 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="图像工程课程在线教程">
+      
+      
+        <meta name="author" content="ECNU 图像工程课程组">
+      
+      
+      
+        <link rel="prev" href="../ch04-segmentation/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第五部分 图像特征与目标识别 - 图像工程（2026 师生共享版）</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="图像工程（2026 师生共享版）" class="md-header__button md-logo" aria-label="图像工程（2026 师生共享版）" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            图像工程（2026 师生共享版）
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第五部分 图像特征与目标识别
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换至深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换至深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换至浅色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换至浅色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="图像工程（2026 师生共享版）" class="md-nav__button md-logo" aria-label="图像工程（2026 师生共享版）" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    图像工程（2026 师生共享版）
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    各章内容
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    各章内容
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch01-image-formation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第一部分 图像形成与数字图像基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch02-enhancement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第二部分 图像增强与滤波
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch03-sharpening/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第三部分 锐化与边缘检测
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ch04-segmentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第四部分 图像分割
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第五部分 图像特征与目标识别
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">第五部分 图像特征与目标识别<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h1 id="_2">第五部分：图像特征与目标识别<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<h1 id="_3">核心问题<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
+<p>经过增强、边缘检测和分割之后，我们希望进一步回答：</p>
+<p>图像中有什么？它属于哪一类？</p>
+<h1 id="_4">从区域到理解<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h1>
+<p>图像 <span class="arithmatex">\(\longrightarrow\)</span> 特征提取 <span class="arithmatex">\(\longrightarrow\)</span> 分类识别</p>
+<h1 id="_5">图像特征<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h1>
+<h1 id="_6">目标识别<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h1>
+<h1 id="_7">一句话<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h1>
+<p>特征是图像内容的 “描述方式”，识别是根据这些描述判断 “它是什么”。</p>
+<h1 id="_8">什么是图像特征？<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h1>
+<h1 id="_9">直观理解<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h1>
+<p>图像特征就是从图像中提取出来的、有助于区分不同目标的信息。</p>
+<h1 id="_10">人是怎样识别物体的？<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h1>
+<h1 id="_11">计算机需要什么？<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h1>
+<h1 id="_12">关键理解<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h1>
+<p>图像特征不是图像本身，而是对图像中有用信息的概括。</p>
+<h1 id="_13">为什么不能直接用像素识别？<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h1>
+<h1 id="_14">一个朴素想法<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h1>
+<p>既然图像本来就是像素矩阵，能不能直接比较像素？</p>
+<div class="arithmatex">\[
+I = \left[ \begin{array}{c c c} I (1, 1) &amp; I (1, 2) &amp; \dots \\ I (2, 1) &amp; I (2, 2) &amp; \dots \\ \vdots &amp; \vdots &amp; \ddots \end{array} \right]
+\]</div>
+<h1 id="_15">问题在于：像素太敏感<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h1>
+<h1 id="_16">一句话<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h1>
+<p>直接比较像素往往不稳定，因此需要提取更加稳健的图像特征。</p>
+<h1 id="_17">颜色特征：最直观的图像描述<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h1>
+<h1 id="_18">基本思想<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h1>
+<p>颜色特征描述图像中颜色的组成和分布。</p>
+<h1 id="_19">常见方法：颜色直方图<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h1>
+<p>统计不同颜色或灰度在图像中出现的频率。</p>
+<div class="arithmatex">\[
+h (k) = \# \{(x, y) \mid I (x, y) = k \}
+\]</div>
+<h1 id="_20">优点<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h1>
+<h1 id="_21">缺点<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h1>
+<p>例子：只看颜色，绿色苹果和绿色葡萄可能很难区分。</p>
+<h1 id="_22">纹理特征：描述局部重复结构<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h1>
+<h1 id="_23">什么是纹理？<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h1>
+<p>纹理是图像中局部灰度或颜色反复变化形成的结构模式。</p>
+<h1 id="_24">常见纹理<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h1>
+<h1 id="_25">纹理能描述什么？<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h1>
+<h1 id="_26">理解<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h1>
+<p>纹理特征关注的不是单个像素，而是一小片区域内的灰度变化规律。</p>
+<h1 id="_27">形状特征：描述目标轮廓<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h1>
+<h1 id="_28">基本思想<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h1>
+<p>形状特征用于描述目标区域的几何外观。</p>
+<h1 id="_29">常见形状信息<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h1>
+<h1 id="_30">适用场景<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h1>
+<h1 id="_31">例子<a class="headerlink" href="#_31" title="Permanent link">&para;</a></h1>
+<p>圆形、细长形、不规则形状，往往对应不同类型的目标。</p>
+<h1 id="_32">注意<a class="headerlink" href="#_32" title="Permanent link">&para;</a></h1>
+<p>形状特征通常依赖较好的分割结果；如果分割不准，形状描述也会受到影响。</p>
+<h1 id="_33">局部特征：抓住图像中的关键位置<a class="headerlink" href="#_33" title="Permanent link">&para;</a></h1>
+<h1 id="_34">基本思想<a class="headerlink" href="#_34" title="Permanent link">&para;</a></h1>
+<p>有些位置比普通像素更有辨识度，例如角点、斑点、纹理突变处。</p>
+<h1 id="_35">局部特征关注什么？<a class="headerlink" href="#_35" title="Permanent link">&para;</a></h1>
+<h1 id="_36">典型应用<a class="headerlink" href="#_36" title="Permanent link">&para;</a></h1>
+<h1 id="_37">一句话<a class="headerlink" href="#_37" title="Permanent link">&para;</a></h1>
+<p>局部特征就像图像中的 “指纹点”，可以帮助计算机在不同图像之间建立对应关系。</p>
+<h1 id="_38">从人工特征到深度特征<a class="headerlink" href="#_38" title="Permanent link">&para;</a></h1>
+<h1 id="_39">传统方法<a class="headerlink" href="#_39" title="Permanent link">&para;</a></h1>
+<p>人工设计特征，然后交给分类器判断。</p>
+<p>图像 <span class="arithmatex">\(\longrightarrow\)</span> 人工特征 <span class="arithmatex">\(\longrightarrow\)</span> 分类器 <span class="arithmatex">\(\longrightarrow\)</span> 类别</p>
+<h1 id="_40">深度学习方法<a class="headerlink" href="#_40" title="Permanent link">&para;</a></h1>
+<p>神经网络自动从数据中学习特征。</p>
+<p>图像 <span class="arithmatex">\(\longrightarrow\)</span> 神经网络 <span class="arithmatex">\(\longrightarrow\)</span> 类别</p>
+<h1 id="_41">人工特征<a class="headerlink" href="#_41" title="Permanent link">&para;</a></h1>
+<h1 id="_42">深度特征<a class="headerlink" href="#_42" title="Permanent link">&para;</a></h1>
+<h1 id="_43">目标识别：从特征到类别<a class="headerlink" href="#_43" title="Permanent link">&para;</a></h1>
+<h1 id="_44">基本思想<a class="headerlink" href="#_44" title="Permanent link">&para;</a></h1>
+<p>目标识别的任务，是根据图像或图像区域的特征，判断它属于哪一类。</p>
+<h1 id="longrightarrow-longrightarrow">图像区域 <span class="arithmatex">\(\longrightarrow\)</span> 特征表示 <span class="arithmatex">\(\longrightarrow\)</span> 分类结果<a class="headerlink" href="#longrightarrow-longrightarrow" title="Permanent link">&para;</a></h1>
+<h1 id="_45">输入<a class="headerlink" href="#_45" title="Permanent link">&para;</a></h1>
+<h1 id="_46">输出<a class="headerlink" href="#_46" title="Permanent link">&para;</a></h1>
+<h1 id="_47">一句话<a class="headerlink" href="#_47" title="Permanent link">&para;</a></h1>
+<p>目标识别就是让计算机根据图像内容回答 “这是什么”。</p>
+<h1 id="_48">分类器：根据特征做判断<a class="headerlink" href="#_48" title="Permanent link">&para;</a></h1>
+<h1 id="_49">传统识别流程<a class="headerlink" href="#_49" title="Permanent link">&para;</a></h1>
+<p>通常先提取特征，再使用分类器进行判断。</p>
+<p>图像 <span class="arithmatex">\(\longrightarrow\)</span> 特征向量 <span class="arithmatex">\(\longrightarrow\)</span> 分类器 <span class="arithmatex">\(\longrightarrow\)</span> 类别</p>
+<h1 id="_50">特征向量<a class="headerlink" href="#_50" title="Permanent link">&para;</a></h1>
+<p>把颜色、纹理、形状等信息表示成一组数字：</p>
+<div class="arithmatex">\[
+\mathbf {x} = (x _ {1}, x _ {2}, \dots , x _ {d})
+\]</div>
+<h1 id="_51">分类器的作用<a class="headerlink" href="#_51" title="Permanent link">&para;</a></h1>
+<h1 id="_52">理解<a class="headerlink" href="#_52" title="Permanent link">&para;</a></h1>
+<p>分类器可以看作一个决策规则：输入一组特征，输出一个类别。</p>
+<h1 id="_53">一个简单分类例子：猫和狗<a class="headerlink" href="#_53" title="Permanent link">&para;</a></h1>
+<h1 id="_54">问题<a class="headerlink" href="#_54" title="Permanent link">&para;</a></h1>
+<p>给定一张动物图片，希望判断它是猫还是狗。</p>
+<h1 id="_55">传统方法可能会怎么做？<a class="headerlink" href="#_55" title="Permanent link">&para;</a></h1>
+<p>动物图像 <span class="arithmatex">\(\longrightarrow\)</span> 特征 <span class="arithmatex">\(\longrightarrow\)</span> 猫 / 狗</p>
+<h1 id="_56">困难在哪里？<a class="headerlink" href="#_56" title="Permanent link">&para;</a></h1>
+<h1 id="_57">目标识别为什么困难？<a class="headerlink" href="#_57" title="Permanent link">&para;</a></h1>
+<h1 id="_58">同一个目标可能看起来很不一样<a class="headerlink" href="#_58" title="Permanent link">&para;</a></h1>
+<h1 id="_59">不同目标也可能看起来很相似<a class="headerlink" href="#_59" title="Permanent link">&para;</a></h1>
+<h1 id="_60">关键理解<a class="headerlink" href="#_60" title="Permanent link">&para;</a></h1>
+<p>目标识别不是简单地比较像素，而是要在复杂变化中抓住稳定的本质特征。</p>
+<h1 id="_61">卷积神经网络：自动学习图像特征<a class="headerlink" href="#_61" title="Permanent link">&para;</a></h1>
+<h1 id="_62">基本思想<a class="headerlink" href="#_62" title="Permanent link">&para;</a></h1>
+<p>卷积神经网络 CNN 可以从大量图像中自动学习多层次特征。</p>
+<p>图像 <span class="arithmatex">\(\longrightarrow\)</span> 低层特征 <span class="arithmatex">\(\longrightarrow\)</span> 中层特征 <span class="arithmatex">\(\longrightarrow\)</span> 高层语义 <span class="arithmatex">\(\longrightarrow\)</span> 类别</p>
+<h1 id="_63">低层特征<a class="headerlink" href="#_63" title="Permanent link">&para;</a></h1>
+<h1 id="_64">中层特征<a class="headerlink" href="#_64" title="Permanent link">&para;</a></h1>
+<h1 id="_65">高层特征<a class="headerlink" href="#_65" title="Permanent link">&para;</a></h1>
+<h1 id="_66">一句话<a class="headerlink" href="#_66" title="Permanent link">&para;</a></h1>
+<p>深度网络不是手工指定特征，而是从数据中逐层学习特征。</p>
+<h1 id="_67">卷积操作：局部模式检测<a class="headerlink" href="#_67" title="Permanent link">&para;</a></h1>
+<h1 id="_68">基本思想<a class="headerlink" href="#_68" title="Permanent link">&para;</a></h1>
+<p>卷积核在图像上滑动，检测局部区域中是否存在某种模式。</p>
+<div class="arithmatex">\[
+g (i, j) = \sum_ {m, n} w (m, n) f (i - m, j - n)
+\]</div>
+<h1 id="_69">和前面滤波的联系<a class="headerlink" href="#_69" title="Permanent link">&para;</a></h1>
+<h1 id="_70">重要联系<a class="headerlink" href="#_70" title="Permanent link">&para;</a></h1>
+<p>卷积神经网络中的卷积，与前面讲过的滤波、锐化、边缘检测在形式上有相通之处。</p>
+<h1 id="_71">深度网络为什么有效？<a class="headerlink" href="#_71" title="Permanent link">&para;</a></h1>
+<h1 id="_72">核心原因<a class="headerlink" href="#_72" title="Permanent link">&para;</a></h1>
+<p>深度网络能够学习从简单到复杂的多层次表示。</p>
+<h1 id="_73">层次化表示<a class="headerlink" href="#_73" title="Permanent link">&para;</a></h1>
+<p>像素 → 边缘 → 纹理 → 部件 → 目标</p>
+<h1 id="_74">优势<a class="headerlink" href="#_74" title="Permanent link">&para;</a></h1>
+<h1 id="_75">但也要注意<a class="headerlink" href="#_75" title="Permanent link">&para;</a></h1>
+<p>深度学习效果好，并不意味着它不需要数据质量、模型设计和结果解释。</p>
+<h1 id="_76">图像分类、目标检测与分割的区别<a class="headerlink" href="#_76" title="Permanent link">&para;</a></h1>
+<h1 id="_77">三类常见视觉任务<a class="headerlink" href="#_77" title="Permanent link">&para;</a></h1>
+<h1 id="_78">图像分类<a class="headerlink" href="#_78" title="Permanent link">&para;</a></h1>
+<p>图像 <span class="arithmatex">\(\rightarrow\)</span> 类别</p>
+<h1 id="_79">目标检测<a class="headerlink" href="#_79" title="Permanent link">&para;</a></h1>
+<p>图像 <span class="arithmatex">\(\rightarrow\)</span> 框 <span class="arithmatex">\(+\)</span> 类别</p>
+<h1 id="_80">图像分割<a class="headerlink" href="#_80" title="Permanent link">&para;</a></h1>
+<p>图像 <span class="arithmatex">\(\rightarrow\)</span> 像素类别</p>
+<h1 id="_81">一句话<a class="headerlink" href="#_81" title="Permanent link">&para;</a></h1>
+<p>分类回答 “是什么”，检测回答 “在哪里、是什么”，分割回答 “每个像素是什么”。</p>
+<h1 id="_82">目标检测：不仅识别，还要定位<a class="headerlink" href="#_82" title="Permanent link">&para;</a></h1>
+<h1 id="_83">基本任务<a class="headerlink" href="#_83" title="Permanent link">&para;</a></h1>
+<p>目标检测要在图像中找出目标的位置，并判断目标类别。</p>
+<p>图像 <span class="arithmatex">\(\longrightarrow\)</span> {(位置框，类别，置信度)}</p>
+<h1 id="_84">输出通常包括<a class="headerlink" href="#_84" title="Permanent link">&para;</a></h1>
+<h1 id="_85">应用场景<a class="headerlink" href="#_85" title="Permanent link">&para;</a></h1>
+<h1 id="_86">识别结果如何评价？<a class="headerlink" href="#_86" title="Permanent link">&para;</a></h1>
+<h1 id="_87">分类任务常用指标<a class="headerlink" href="#_87" title="Permanent link">&para;</a></h1>
+<div class="arithmatex">\[
+\text { Accuracy } = \frac {\text { 预测正确的样本数 }}{\text { 总样本数 }}
+\]</div>
+<h1 id="_88">为什么不能只看准确率？<a class="headerlink" href="#_88" title="Permanent link">&para;</a></h1>
+<p>如果异常样本很少，一个模型即使全部预测为正常，也可能有很高准确率，但它没有真正发现异常。</p>
+<h1 id="_89">工程理解<a class="headerlink" href="#_89" title="Permanent link">&para;</a></h1>
+<p>评价指标要结合任务目标选择，不能只看一个数字。</p>
+<h1 id="_90">医学图像识别中的例子<a class="headerlink" href="#_90" title="Permanent link">&para;</a></h1>
+<h1 id="_91">任务<a class="headerlink" href="#_91" title="Permanent link">&para;</a></h1>
+<p>根据医学图像判断是否存在病灶，或者判断病灶类型。</p>
+<h1 id="_92">可能的输入<a class="headerlink" href="#_92" title="Permanent link">&para;</a></h1>
+<h1 id="_93">可能的输出<a class="headerlink" href="#_93" title="Permanent link">&para;</a></h1>
+<h1 id="_94">注意<a class="headerlink" href="#_94" title="Permanent link">&para;</a></h1>
+<p>医学图像识别不能只追求高准确率，还要重视可靠性、可解释性和临床验证。</p>
+<h1 id="_95">遥感图像识别中的例子<a class="headerlink" href="#_95" title="Permanent link">&para;</a></h1>
+<h1 id="_96">任务<a class="headerlink" href="#_96" title="Permanent link">&para;</a></h1>
+<p>从遥感图像中识别地物类型或目标对象。</p>
+<h1 id="_97">常见目标<a class="headerlink" href="#_97" title="Permanent link">&para;</a></h1>
+<h1 id="_98">主要困难<a class="headerlink" href="#_98" title="Permanent link">&para;</a></h1>
+<h1 id="_99">理解<a class="headerlink" href="#_99" title="Permanent link">&para;</a></h1>
+<p>遥感图像识别不仅要看局部纹理，还要结合空间分布和场景上下文。</p>
+<h1 id="_100">第五部分阶段小结<a class="headerlink" href="#_100" title="Permanent link">&para;</a></h1>
+<h1 id="_101">本部分核心<a class="headerlink" href="#_101" title="Permanent link">&para;</a></h1>
+<p>从 “图像是什么样子” 到 “图像里有什么”，关键在于建立有效的图像表示。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "search.highlight", "search.suggest", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
