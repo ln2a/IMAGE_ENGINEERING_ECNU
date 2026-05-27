@@ -1,0 +1,87 @@
+# book.yml — 新书配置文件，复制此模板并填写
+# 运行: minerupress export book.yml      （直接导出已有 MinerU 结果）
+# 运行: minerupress fetch  book.yml      （按 source 准备来源，再导出）
+
+# 数据来源：
+# - uploaded_result: 已经放到 mineru_root 下的 MinerU 解析结果（模板默认）
+# - official_api: MinerU 官方 API，适合从 PDF 开始
+# - local_toolchain: 你自己单独安装的本地 MinerU CLI
+source: uploaded_result
+
+# MinerU 输出根目录（包含各分册子目录）
+mineru_root: resources/mineru
+
+# MkDocs docs/ 目录
+docs_out: docs
+
+# 单本书或单个 PDF 的逻辑分册 UID。章节不写 volume_uid 时默认使用它。
+# 如果 MinerU API 自动拆分 PDF，导出的多个 part 仍归到这个 UID 下。
+volume_uid: my-book
+
+# 目录页过滤阈值。仅在查找每个逻辑 UID 的第一个章节边界时，
+# 忽略 page_idx 小于该值的标题匹配；设为 0 可关闭过滤。
+toc_max_page: 10
+
+# 默认严格模式：任一章节边界找不到就失败，避免静默生成错位章节。
+allow_missing_boundaries: false
+
+# ── 可选：本地 MinerU 工具链（外部安装，不内置在 MineruPress） ───────────────
+# 仅当 source: local_toolchain 时使用。
+# 需要你先按 MinerU 官方文档自行安装 `mineru` CLI。常见方式：
+#   uv pip install -U "mineru[all]"
+#
+# local_toolchain:
+#   executable: mineru
+#   args:                       # 额外 CLI 参数；不要写 -p / -o，MineruPress 会自动补上
+#     - -b
+#     - pipeline
+#   sources:                    # volume_uid前缀 → 本地 PDF / 图片 / Office 文件或目录
+#     my-book: resources/pdfs/book.pdf
+#
+# 如果只想装轻量客户端、Docker/源码开发环境或按需扩展，请参考：
+# https://opendatalab.github.io/MinerU/quick_start/
+# https://opendatalab.github.io/MinerU/quick_start/extension_modules/
+# https://opendatalab.github.io/MinerU/usage/cli_tools/
+# ──────────────────────────────────────────────────────────────────────────
+
+# ── 可选：MinerU 云端 API ──────────────────────────────────────────────────
+# 仅当 source: official_api 时使用。
+# 敏感值（token）推荐写在 .env 文件中，不要提交到 git。
+#
+# source: official_api
+# api:
+#   token: ""                    # 留空则读取 MINERU_API_TOKEN 环境变量
+#   enable_formula: true
+#   enable_table: true
+#   model_version: vlm
+#   sources:                     # volume_uid前缀 → 本地 PDF 路径
+#     my-book: resources/pdfs/book.pdf
+#   # 单 PDF 超过 API 页数限制时会自动拆分成 my-book_part1、my-book_part2...
+#   # 章节仍可全部使用同一个 volume_uid，不需要手工维护 part UID。
+# ──────────────────────────────────────────────────────────────────────────
+
+# ── 可选：Cloudflare Pages 部署 ────────────────────────────────────────────
+# 在 plugins 中加入 cf_pages 后，每次 minerupress export 完成会自动部署。
+# CLOUDFLARE_ACCOUNT_ID 和 CLOUDFLARE_API_TOKEN 写在 .env 中。
+#
+# deploy:
+#   pages_project: my-book       # 留空则读取 PAGES_PROJECT 环境变量
+#   site_dir: site
+#   branch: main
+#   wrangler_cmd: npx wrangler
+# ──────────────────────────────────────────────────────────────────────────
+
+# 启用的插件（内置: qr_filter, cjk_spacing, cf_pages；也可填 dotted import 路径）
+plugins:
+  - qr_filter
+  - cjk_spacing
+  # - cf_pages
+
+# 章节列表
+# volume_uid: 可省略；省略时使用顶层 volume_uid。多 PDF/多逻辑卷时再逐章填写。
+# title 会自动推导章节边界，支持“第1章”“附录A”“Chapter 1”“Lesson IV”
+# “Appendix B”“项目二”“10.1”等格式。
+# 若 MinerU 识别出的标题与 title 不同，可用 aliases 或 start_patterns 补充。
+chapters:
+  - slug: ch01-overview
+    title: 第1章 概述

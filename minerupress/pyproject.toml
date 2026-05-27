@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "minerupress"
+version = "0.1.2"
+description = "Turn MinerU output into publishable MkDocs Material book sites"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+keywords = ["mineru", "mkdocs", "book", "pdf", "markdown", "publishing", "agent", "headings"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Documentation",
+    "Topic :: Text Processing :: Markup :: Markdown",
+]
+dependencies = [
+    "pyyaml>=6.0",
+    "requests>=2.31.0",
+    "python-dotenv>=1.0.0",
+    "pypdf>=4.0.0",
+]
+
+[project.optional-dependencies]
+qr = ["opencv-python>=4.8.0"]
+cjk = ["pangu>=4.0.0"]
+all = ["opencv-python>=4.8.0", "pangu>=4.0.0"]
+dev = ["pytest>=8.0.0"]
+
+[project.urls]
+Homepage = "https://github.com/aronnaxlin/minerupress"
+Repository = "https://github.com/aronnaxlin/minerupress"
+Issues = "https://github.com/aronnaxlin/minerupress/issues"
+
+[project.scripts]
+minerupress = "minerupress.cli:main"
+minerupress-export = "minerupress.cli:export_main"
+minerupress-fetch  = "minerupress.cli:fetch_main"
+minerupress-headings = "minerupress.cli:headings_main"
+minerupress-fingerprint = "minerupress.cli:fingerprint_main"
+mineru-export = "minerupress.cli:mineru_export_main"
+mineru-fetch  = "minerupress.cli:mineru_fetch_main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["minerupress*"]
+
+[tool.setuptools.package-data]
+minerupress = [
+    "book_template/.env.example",
+    "book_template/Makefile",
+    "book_template/book.yml",
+    "book_template/mkdocs.yml",
+    "book_template/docs/*.md",
+    "book_template/docs/chapters/*.md",
+    "book_template/resources/mineru/.gitkeep",
+    "book_template/resources/pdfs/.gitkeep",
+]

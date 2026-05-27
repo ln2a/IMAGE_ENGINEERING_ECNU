@@ -1,0 +1,150 @@
+# AGENTS.md
+
+这份说明给在 MineruPress 仓库中协作的 coding agent 使用。目标不是记录某个开发者的本地习惯，而是帮助 agent 正确支持两类任务：
+
+- 使用者：安装 MineruPress，创建图书工作区，把 MinerU 结果导出成 MkDocs Material 站点。
+- 贡献者：修改 MineruPress 工具链、文档、模板、测试、发布流程。
+
+## 项目定位
+
+MineruPress 是通用的 `MinerU -> Markdown -> MkDocs Material` 图书发布工具链。
+
+核心流程：
+
+1. 从 `book.yml` 读取图书配置、来源模式、逻辑分册 UID、章节边界、插件列表和可选部署配置。
+2. 按 `source` 准备或读取 MinerU 输出。
+3. 从 `resources/mineru/` 下读取 `*_content_list.json` 和图片；同一个逻辑 UID 可以对应多个拆分 part。
+4. 按章节边界导出 Markdown 到 `docs/chapters/`，图片复制到 `docs/images/`。
+5. 可选插件处理图片、文本、整章后处理和导出完成后的部署。
+
+## 正确使用工作流
+
+普通用户优先使用发布包，不需要 clone 工具链仓库：
+
+```bash
+pip install "minerupress[all]"
+pip install mkdocs mkdocs-material
+minerupress init my-book
+cd my-book
+```
+
+每个图书工作区只选择一种来源模式：
+
+- `uploaded_result`：已有 MinerU 解析结果。模板默认模式，把结果放到 `resources/mineru/` 后运行 `minerupress export book.yml`。
+- `official_api`：从 PDF 走 MinerU 官方 API。配置 `api.sources` 和 `MINERU_API_TOKEN` 后运行 `minerupress fetch book.yml`。
+- `local_toolchain`：调用用户单独安装的本地 `mineru` CLI。配置 `local_toolchain.sources` 后运行 `minerupress fetch book.yml`。
+
+`local_toolchain` 是外部可选能力。MineruPress 不内置 MinerU，也不应把 MinerU 作为强依赖；安装方式和 CLI 参数以 MinerU 官方文档为准。
+
+稳定跑书通常分两轮：
+
+1. 准备来源，拿到 `resources/mineru/`。
+2. 运行 `minerupress headings resources/mineru --volume-uid <uid> --format yaml --body-only`，根据真实标题结构修 `chapters`。
+3. 运行 `minerupress export book.yml`。
+4. 运行 `mkdocs build --strict`。
+5. 需要留痕时运行 `minerupress fingerprint --docs-dir docs --out reports/fingerprints.json`。
+
+## 贡献者工作流
+
+只有在修改 MineruPress 自身时才使用源码安装：
+
+```bash
+git clone https://github.com/aronnaxlin/minerupress.git
+cd minerupress
+pip install -e ".[dev]"
+```
+
+修改后至少运行：
+
+```bash
+python -m compileall minerupress
+pytest
+```
+
+如果本地没有测试依赖，至少运行 `python -m compileall minerupress`，并在交付说明中明确说明哪些验证没有执行。
+
+## 主要目录
+
+- `minerupress/`：Python 包源码。
+- `minerupress/core.py`：导出引擎，负责分册发现、章节边界查找、item 转 Markdown、图片复制和插件 hook。
+- `minerupress/loader.py`：解析 `book.yml`，组装 `BookConfig`、插件实例和 `SourceConfig`。
+- `minerupress/cli.py`：统一 CLI 入口，支持 `minerupress init|export|fetch|headings|fingerprint`，并兼容旧命令。
+- `minerupress/api_client.py`：MinerU API 客户端，包含上传、轮询、下载和 PDF 分片。
+- `minerupress/fingerprint.py`：对 `docs/` 下 Markdown 生成 SHA-256 指纹并输出差异。
+- `minerupress/plugins/`：内置插件和 `ExportPlugin` 基类。
+- `book_template/`：仓库内的新书模板副本。
+- `minerupress/book_template/`：随 PyPI 包发布的模板副本，供 `minerupress init` 复制。
+- `docs/`：项目文档，不是某一本书的生成目录。
+- `skills/minerupress/`：给外部 AI agent 安装的 MineruPress Skill。
+
+## 仓库边界
+
+这个仓库是工具链。真实图书工作区、源 PDF、MinerU 输出、站点构建结果和敏感配置不要提交进工具链仓库，除非用户明确要求维护的是某个独立图书仓库。
+
+通常不要提交：
+
+- `.env`
+- `resources/`
+- `site/`
+- `reports/`
+- `.wrangler/`
+- 临时图书运行目录
+
+注意：项目文档使用的 `docs/` 是仓库文档目录；新书工作区中的 `docs/` 是生成/维护站点内容的目录。不要把两者混淆。
+
+## `book.yml` 约定
+
+关键字段：
+
+- `source`：`uploaded_result`、`official_api` 或 `local_toolchain`。
+- `mineru_root`：MinerU 输出根目录，默认 `resources/mineru`。
+- `docs_out`：MkDocs 文档目录，默认 `docs`。
+- `volume_uid`：顶层默认逻辑分册 UID。章节不写 `volume_uid` 时继承它。
+- `toc_max_page`：查找每个逻辑 UID 的第一个章节边界时跳过的目录页阈值；`0` 表示不跳过。
+- `allow_missing_boundaries`：默认 `false`。严格模式下任一章节边界缺失会失败。
+- `plugins`：内置插件名或自定义插件 dotted import 路径。
+- `chapters`：章节列表，必须包含 `slug` 和 `title`。
+
+`volume_uid` 是 MinerU 输出目录名的可匹配前缀，不一定是完整 UUID。单 PDF 自动拆分后会形成 `volume_uid_part1`、`volume_uid_part2` 等目录，章节仍使用同一个逻辑 `volume_uid`。
+
+章节边界优先从 `title` 自动推导；只有 MinerU 标题异常、目录页抢先命中或存在歧义时，再写 `aliases`、`start_pattern` 或 `start_patterns`。
+
+所有相对路径按 `book.yml` 所在目录解析，不依赖调用命令时的当前工作目录。
+
+## 插件开发约定
+
+插件继承 `minerupress.plugins.base.ExportPlugin`，按需覆盖：
+
+- `on_image(item, img_path) -> bool`：返回 `False` 丢弃图片。
+- `on_text(item, text) -> str`：处理文本、caption、alt 等。
+- `on_chapter_done(slug, lines) -> list[str]`：整章后处理。
+- `on_export_done(docs_out) -> None`：导出完成后的副作用，例如部署。
+
+新增内置插件时：
+
+1. 放在 `minerupress/plugins/`。
+2. 在 `loader.py` 的 `_BUILTIN_PLUGINS` 注册短名。
+3. 如需公开导入，再更新 `minerupress/plugins/__init__.py` 或 `minerupress/__init__.py`。
+4. 更新 README、`docs/`、模板 `book.yml`、`AGENTS.md` 和 `skills/minerupress/`。
+
+插件应尽量容错：缺可选依赖时警告并退化为 no-op，避免让普通导出流程崩掉。
+
+## 代码与文档风格
+
+- 使用标准库 `pathlib.Path` 处理路径。
+- 保持现有 dataclass 配置风格，不为简单字段引入重型配置框架。
+- 导出引擎应尽量保持书籍无关；书籍差异放在 `book.yml` 或插件中。
+- 不要把特定教材的清洗规则写死进 `core.py`。
+- 对会触发网络、上传、部署或大量生成文件的命令保持克制，先确认用户意图。
+- 用户文档先讲发布包和 `minerupress init`，再讲贡献者源码安装。
+- CLI 主流程统一使用 `minerupress <subcommand>`；旧入口只作为兼容说明出现。
+
+## 当前实现注意事项
+
+- `book_template/` 和 `minerupress/book_template/` 需要保持同步；修改模板时同步两处，并运行相关测试。
+- `book_template/Makefile` 是给新书工作区使用的，不代表仓库根目录有 `make` 工作流。
+- `api_client.fetch()` 返回 `list[Path]`，顺序必须与原始 PDF chunk 顺序一致。
+- `minerupress fetch` 会按 `source` 准备内容后自动导出。
+- `minerupress export --fetch` 是兼容/便捷入口；用户文档主流程优先讲清楚 `fetch` 和 `export` 的区别。
+- `core.export()` 会根据 UID 前缀在 `mineru_root` 下自动发现一个或多个分册目录，并按自然顺序顺推章节边界。
+- `core.export()` 每次都会重建 `docs/chapters/` 和 `docs/images/`，不要在这些目录里放手工长期维护内容。
