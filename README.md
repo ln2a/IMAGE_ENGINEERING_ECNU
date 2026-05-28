@@ -46,6 +46,6 @@ image_website/
 ```
 
 ## 技术栈
-- **PDF 处理：** [MinerU](https://github.com/opendatalab/MinerU)（通过 [minerupress](https://github.com/aronnaxlin/minerupress) 封装）
+- **PDF 处理：**  [minerupress](https://github.com/aronnaxlin/minerupress) 
 - **在线运行：** [Binder](https://mybinder.org/)（Jupyter Notebook 交互环境）
 - **部署平台：** [Cloudflare Pages](https://pages.cloudflare.com/)
