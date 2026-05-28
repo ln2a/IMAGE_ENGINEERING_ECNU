@@ -672,6 +672,12 @@ def export(config: BookConfig, plugins: Sequence[ExportPlugin] = ()) -> None:
             chapter_items = list(_iter_chapter_items(segments, start, end))
 
             lines: list[str] = [f"# {ch.title}", ""]
+            # Track first heading per page: only the first heading on each
+            # PDF page becomes `##`; subsequent headings on the same page
+            # are demoted to plain text.
+            seen_chapter_title = True  # line[0] is already the chapter title
+            last_page_idx: int | None = None
+            first_on_page = True
             for item_idx, item, segment in chapter_items:
                 image_out_name = image_decisions.get((segment.path, item_idx))
                 md = _item_to_md(
@@ -680,6 +686,25 @@ def export(config: BookConfig, plugins: Sequence[ExportPlugin] = ()) -> None:
                     plugins=plugins,
                 )
                 if md is not None:
+                    pg = item.get("page_idx")
+                    is_heading = md.lstrip().startswith("# ")
+                    if is_heading and not seen_chapter_title:
+                        seen_chapter_title = True
+                    elif is_heading:
+                        if pg is not None and pg != last_page_idx:
+                            last_page_idx = pg
+                            first_on_page = True
+                        if first_on_page:
+                            # First heading on this page → ##
+                            stripped = md.lstrip()
+                            indent = md[:len(md) - len(stripped)]
+                            md = f"{indent}## {stripped[2:]}"
+                            first_on_page = False
+                        else:
+                            # Subsequent headings on same page → plain text
+                            stripped = md.lstrip()
+                            indent = md[:len(md) - len(stripped)]
+                            md = f"{indent}{stripped[2:]}"
                     lines.append(md)
                     lines.append("")
 

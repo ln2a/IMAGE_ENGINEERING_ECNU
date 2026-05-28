@@ -271,6 +271,56 @@ This is the single most impactful fix for content-completeness — list items ac
 
 When `minerupress` is installed via `pip install -e ...` (editable mode), changes to `minerupress/core.py` take effect **immediately** without re-installation. The modified file is used directly from the source tree.
 
+### Heading Hierarchy: Per-Page First Headings
+
+MinerU v1 `content_list.json` assigns `text_level: 1` to nearly all text headings (307 out of 491 text items in a typical 81-page course PDF). If every heading is rendered as `#`, the MkDocs Table of Contents sidebar becomes a flat, useless list.
+
+The exporter in `minerupress/core.py` handles this with **page-aware heading demotion** (added in the main export loop, not in `_item_to_md`):
+
+1. The first `#` line is always the chapter title from `book.yml`.
+2. For each subsequent heading item, track its `page_idx`.
+3. The **first** heading item on each PDF page → rendered as `##` (shows in MkDocs right-side TOC).
+4. All **subsequent** heading items on the same page → rendered as **plain text** (no `#` prefix), keeping the content visible but not polluting the TOC.
+
+Key implementation detail — initialize `seen_chapter_title = True` before the item loop because line[0] is already the chapter title:
+
+```python
+lines: list[str] = [f"# {ch.title}", ""]
+seen_chapter_title = True
+last_page_idx: int | None = None
+first_on_page = True
+for item_idx, item, segment in chapter_items:
+    md = _item_to_md(item, ...)
+    if md and md.lstrip().startswith("# "):
+        if not seen_chapter_title:
+            seen_chapter_title = True       # first heading = chapter title
+        else:
+            pg = item.get("page_idx")
+            if pg is not None and pg != last_page_idx:
+                last_page_idx = pg
+                first_on_page = True
+            if first_on_page:
+                md = f"## {stripped[2:]}"   # first on page → level-2
+                first_on_page = False
+            else:
+                md = stripped[2:]           # subsequent → plain text
+    lines.append(md)
+    lines.append("")
+```
+
+Without this logic, a typical 5-chapter PDF produces 60+ flat `#` headings. With it, only 1 `#` + ~19 `##` per chapter (one per body page).
+
+### Default Theme
+
+MkDocs Material's `theme.palette.primary` only accepts a fixed set of named colors. **Default to `light-blue`** — do not add custom CSS overrides for the primary color.
+
+```yaml
+theme:
+  palette:
+    primary: light-blue
+    accent: light-blue
+```
+
 ### Git Submodule Deploy Trap
 
 The `minerupress/` directory inside the book workspace is often a standalone git repository (it has its own `.git/`). When the parent book workspace is pushed to a remote for Cloudflare Pages deployment, git records it as a submodule entry (mode `160000`). Cloudflare's `git clone` then tries to init submodules but fails because no `.gitmodules` file exists.
