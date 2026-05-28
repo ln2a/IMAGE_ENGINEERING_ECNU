@@ -281,4 +281,4 @@ plt.tight_layout()
 plt.show()
 ```
 
-<a href="https://hub.2i2c.mybinder.org/user/ln2a-image_engineering_ecnu-3gjfwbuq/doc/tree/python-tutorial/ex2_1.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 8px;">运行此代码 →</a>
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex2_1.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 8px;">运行此代码 →</a>
