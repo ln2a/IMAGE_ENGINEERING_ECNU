@@ -19,10 +19,10 @@ volume_uid: image-engineering
 
 # 目录页过滤阈值。仅在查找每个逻辑 UID 的第一个章节边界时，
 # 忽略 page_idx 小于该值的标题匹配；设为 0 可关闭过滤。
-toc_max_page: 3
+toc_max_page: 2
 
 # 默认严格模式：任一章节边界找不到就失败，避免静默生成错位章节。
-allow_missing_boundaries: True
+allow_missing_boundaries: false
 
 # 启用的插件
 plugins:
@@ -36,16 +36,16 @@ chapters:
     start_pattern: 图像从哪里来
   - slug: ch02-enhancement
     title: 第二部分 图像增强与滤波
-    start_pattern: 第二部分.*图像增强与滤波
+    start_pattern: 第二部分
   - slug: ch03-sharpening
     title: 第三部分 锐化与边缘检测
-    start_pattern: 第三部分.*锐化与边缘检测
+    start_pattern: 第三部分
   - slug: ch04-segmentation
     title: 第四部分 图像分割
-    start_pattern: 第四部分.*图像分割
+    start_pattern: 第四部分
   - slug: ch05-features
     title: 第五部分 图像特征与目标识别
-    start_pattern: 第五部分.*图像特征与目标识别
+    start_pattern: 第五部分
 
 # ── 可选：MinerU 云端 API ──────────────────────────────────────────────────
 # 仅当 source: official_api 时使用。

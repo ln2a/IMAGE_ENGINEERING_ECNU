@@ -531,6 +531,23 @@ def _item_to_md(
     if t == "code":
         return _format_code_block(_code_body(item))
 
+    # ---- list (unordered / ordered) ----
+    # MinerU v1 content_list.json stores list content in `list_items` field,
+    # NOT in `text`. Without this handler, ~15% of all items (109 in a typical
+    # 81-page PDF) are silently dropped. See skills/minerupress/SKILL.md.
+    if t == "list":
+        items = item.get("list_items")
+        if items and isinstance(items, list):
+            lines = "\n".join(str(li).strip() for li in items if str(li).strip())
+            if lines:
+                lines = _apply_text_plugins(item, lines, plugins)
+                return lines if "\n" in lines else lines
+        # fallback to text field if list_items is empty
+        text = item.get("text", "").strip()
+        if text:
+            return _apply_text_plugins(item, text, plugins)
+        return None
+
     # ---- all text-like types ----
     text = item.get("text", "").strip()
     if not text:

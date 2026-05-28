@@ -206,3 +206,82 @@ Literal HTML/XML tags in normal prose and captions are escaped during export so 
 ## References
 
 Read `references/book-yml.md` for compact config examples. For the current end-to-end user workflow, read `docs/guide/getting-started.md`, `docs/guide/configuration.md`, and `docs/guide/workflow-run-a-book.md`.
+
+## Practical Lessons (Real-World Experience)
+
+These are hard-won learnings from actual user sessions that the abstract documentation does not capture.
+
+### toc_max_page Off-by-One
+
+`toc_max_page` filters items whose `page_idx < threshold`. In a typical course-PDF (title slide → TOC → body), page indices are:
+
+- `page_idx=0`: title slide (封面)
+- `page_idx=1`: TOC (目录)
+- `page_idx=2`: first body page (第一页正文)
+
+If `toc_max_page` is set to `3`, body content starting on `page_idx=2` is **silently skipped** and the first chapter boundary is never found, even when the `start_pattern` would match. The chapter is then skipped under `allow_missing_boundaries: True`, producing an almost-empty file (often just the chapter title from `book.yml`).
+
+**Fix**: set `toc_max_page: 2` for PDFs where the body starts on the third physical page. Or `toc_max_page: 0` to disable filtering entirely when unsure.
+
+### start_pattern: Prefer Simplicity
+
+Chinese part/section headings in MinerU output may have unpredictable punctuation, whitespace, or trailing annotation. For example, the actual text might be `图像从哪里来：图像形成与数字图像基础` while the pattern expects `图像从哪里来` with anchors.
+
+Avoid over-specifying patterns:
+
+```yaml
+# Good — works with or without trailing text
+start_pattern: 第二部分
+
+# Fragile — breaks if actual text is "第二部分：图像增强与滤波"
+start_pattern: 第二部分.*图像增强与滤波
+```
+
+The MineruPress auto-generated patterns from `title` are also helpful. A title like `第一部分 图像形成与数字图像基础` auto-generates patterns that match `第一部分...` headings, but not `图像从哪里来：...` headings. If the actual PDF section heading differs from the book.yml title, supply a `start_pattern`.
+
+### List Items Silent Drop
+
+MinerU v1 `content_list.json` stores list content in the `list_items` field (a list of strings like `["- item one", "- item two"]`), **not** in the `text` field. The `_item_to_md()` function in `minerupress/core.py` originally read only `item.get("text", "")`:
+
+```python
+text = item.get("text", "").strip()
+if not text:
+    return None  # ← list items silently dropped here (109 items in a typical 81-page PDF)
+```
+
+**Fix**: Add a `list` type handler before the text fallback:
+
+```python
+if t == "list":
+    items = item.get("list_items")
+    if items and isinstance(items, list):
+        lines = "\n".join(str(li).strip() for li in items if str(li).strip())
+        if lines:
+            return _apply_text_plugins(item, lines, plugins)
+    return None
+```
+
+This is the single most impactful fix for content-completeness — list items account for ~15% of all items in a typical course-PDF.
+
+### Homepage Is a Template Placeholder
+
+`minerupress init` generates a generic `docs/index.md` with placeholder text. For a course PDF, replace it with the title slide information (course name, instructor, schedule, department, email) and a table-of-contents overview derived from the PDF structure.
+
+### Editable Install Caveat
+
+When `minerupress` is installed via `pip install -e ...` (editable mode), changes to `minerupress/core.py` take effect **immediately** without re-installation. The modified file is used directly from the source tree.
+
+### Git Submodule Deploy Trap
+
+The `minerupress/` directory inside the book workspace is often a standalone git repository (it has its own `.git/`). When the parent book workspace is pushed to a remote for Cloudflare Pages deployment, git records it as a submodule entry (mode `160000`). Cloudflare's `git clone` then tries to init submodules but fails because no `.gitmodules` file exists.
+
+**Fix**: Before committing the parent workspace:
+
+```bash
+rm -rf minerupress/.git
+git rm --cached minerupress       # remove the submodule entry
+git add minerupress/               # re-add as regular files
+```
+
+Or configure Cloudflare Pages to **not** initialize submodules (set `CF_PAGES_SUBMODULES=false` in environment variables).
+

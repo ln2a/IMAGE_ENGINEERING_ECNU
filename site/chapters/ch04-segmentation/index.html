@@ -53,6 +53,8 @@
       
     
     
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -524,6 +526,12 @@
 <p>图像分割的目标，是把图像划分成若干有意义的区域。</p>
 <p>原始图像 → 区域划分 → 目标提取</p>
 <h1 id="_4">典型任务<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h1>
+<ul>
+<li>从医学图像中分割器官或病灶；</li>
+<li>从遥感图像中分割道路、建筑、水体；</li>
+<li>从自然图像中分割人物、车辆、动物；</li>
+<li>从工业图像中分割缺陷区域。</li>
+</ul>
 <h1 id="_5">什么是图像分割？<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h1>
 <h1 id="_6">基本定义<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h1>
 <p>图像分割是将图像中的像素按照某种相似性或目标语义划分为不同区域的过程。</p>
@@ -532,10 +540,26 @@
 \Omega = \Omega_ {1} \cup \Omega_ {2} \cup \dots \cup \Omega_ {K}
 \]</div>
 <p>其中：</p>
+<ul>
+<li><span class="arithmatex">\(\Omega_{k}\)</span> : 第 <span class="arithmatex">\(k\)</span> 个区域；- 同一区域内部像素具有相似性质；</li>
+<li>不同区域之间具有明显差异。</li>
+</ul>
 <h1 id="_7">关键问题<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h1>
 <h1 id="_8">分割依据：像素为什么属于同一区域？<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h1>
 <h1 id="_9">常见依据<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h1>
+<ul>
+<li>灰度相似：亮度接近；</li>
+<li>颜色相似：RGB 或 HSV 值接近；</li>
+<li>纹理相似：局部结构或重复模式相似；</li>
+<li>空间相邻：位置上连通；</li>
+<li>语义一致：都属于同一类目标。</li>
+</ul>
 <h1 id="_10">例子<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h1>
+<ul>
+<li>蓝色区域可能对应天空；</li>
+<li>灰色细长区域可能对应道路；</li>
+<li>医学图像中亮度异常区域可能对应病灶。</li>
+</ul>
 <h1 id="_11">注意<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h1>
 <h1 id="_12">阈值分割：最简单的分割方法<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h1>
 <h1 id="_13">基本思想<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h1>
@@ -544,6 +568,11 @@
 g (x, y) = \left\{ \begin{array}{l l} 1, &amp; f (x, y) \geq T, \\ 0, &amp; f (x, y) &lt;   T. \end{array} \right.
 \]</div>
 <h1 id="_14">理解<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h1>
+<ul>
+<li>灰度大于阈值：判为目标；</li>
+<li>灰度小于阈值：判为背景；</li>
+<li>结果通常是一幅二值图像。</li>
+</ul>
 <h1 id="_15">适用场景<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h1>
 <p>目标与背景对比明显、光照较均匀的图像。</p>
 <h1 id="_16">阈值怎么选？<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h1>
@@ -563,16 +592,40 @@ T = 1 2 8
 <p>先选择一个种子点，然后把周围与它相似的像素逐步加入同一区域。</p>
 <p>种子点 → 检查邻域 → 加入相似像素 → 形成区域</p>
 <h1 id="_22">判断依据<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h1>
+<ul>
+<li>灰度差是否小于阈值；</li>
+<li>颜色是否接近；</li>
+<li>是否与当前区域连通。</li>
+</ul>
 <h1 id="_23">特点<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h1>
 <p>结果直观，但对种子点选择和相似性标准比较敏感。</p>
 <h1 id="_24">边缘方法与区域方法的区别<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h1>
 <h1 id="_25">边缘方法<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h1>
+<ul>
+<li>关注灰度突变；</li>
+<li>先找边界；</li>
+<li>适合轮廓清楚的目标；</li>
+<li>边缘断裂时效果会受影响。</li>
+</ul>
 <h1 id="_26">区域方法<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h1>
+<ul>
+<li>关注区域内部一致性；</li>
+<li>先找相似像素集合；</li>
+<li>适合灰度或颜色较均匀的目标；</li>
+<li>对光照变化比较敏感。</li>
+</ul>
 <h1 id="_27">理解<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h1>
 <p>边缘方法问的是 “边界在哪里”，区域方法问的是 “哪些像素属于一起”。</p>
 <h1 id="_28">传统分割方法的局限<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h1>
 <h1 id="_29">为什么分割不容易？<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h1>
 <p>真实图像往往比理想情况复杂得多：</p>
+<ul>
+<li>光照不均：同一物体不同位置亮度不同；</li>
+<li>背景复杂：目标和背景颜色接近；</li>
+<li>边界模糊：物体轮廓不一定清楚；</li>
+<li>噪声干扰：局部像素可能出现异常；</li>
+<li>语义复杂：同一类目标外观差异很大。</li>
+</ul>
 <h1 id="_30">关键理解<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h1>
 <p>传统方法主要依赖灰度、颜色、边缘等低层特征，但很多时候，分割还需要理解图像中的 “内容”。</p>
 <h1 id="_31">从传统分割到语义分割<a class="headerlink" href="#_31" title="Permanent link">&para;</a></h1>
@@ -591,12 +644,27 @@ T = 1 2 8
 f (x, y) \longrightarrow c (x, y)
 \]</div>
 <p>其中：</p>
+<ul>
+<li><span class="arithmatex">\(f(x, y)\)</span> : 图像中位置 <span class="arithmatex">\((x, y)\)</span> 的像素信息；- <span class="arithmatex">\(c(x, y)\)</span> : 该像素对应的类别标签；- 每个像素都要被赋予一个语义类别。</li>
+</ul>
 <h1 id="_37">例子<a class="headerlink" href="#_37" title="Permanent link">&para;</a></h1>
+<ul>
+<li>天空像素标为 sky;</li>
+<li>道路像素标为 road;</li>
+<li>行人像素标为 person;</li>
+<li>车辆像素标为 car。</li>
+</ul>
 <h1 id="_38">深度学习如何做分割？<a class="headerlink" href="#_38" title="Permanent link">&para;</a></h1>
 <h1 id="_39">基本思路<a class="headerlink" href="#_39" title="Permanent link">&para;</a></h1>
 <p>用神经网络从图像中学习特征，并输出每个像素的类别。</p>
 <p>输入图像 <span class="arithmatex">\(\xrightarrow{CNN / Transformer}\)</span> 像素级类别图</p>
 <h1 id="_40">网络需要学习什么？<a class="headerlink" href="#_40" title="Permanent link">&para;</a></h1>
+<ul>
+<li>局部纹理：边缘、角点、颜色变化；</li>
+<li>中层结构：轮廓、部件、局部形状；</li>
+<li>高层语义：人、车、道路、器官等目标类别；</li>
+<li>空间关系：哪些区域可能属于同一个对象。</li>
+</ul>
 <h1 id="_41">理解<a class="headerlink" href="#_41" title="Permanent link">&para;</a></h1>
 <p>深度学习方法不只是看单个像素，而是结合上下文判断像素类别。</p>
 <h1 id="_42">语义分割与实例分割<a class="headerlink" href="#_42" title="Permanent link">&para;</a></h1>
@@ -606,6 +674,11 @@ f (x, y) \longrightarrow c (x, y)
 <h1 id="_44">实例分割<a class="headerlink" href="#_44" title="Permanent link">&para;</a></h1>
 <p>不仅判断类别，还要区分不同个体。</p>
 <p>人 1, 人 2, 人 3</p>
+<ul>
+<li>语义分割：关心 “是什么”；</li>
+<li>实例分割：还关心 “是哪一个”；</li>
+<li>医学、自动驾驶、机器人感知中都很重要。</li>
+</ul>
 <h1 id="_45">分割结果如何评价？<a class="headerlink" href="#_45" title="Permanent link">&para;</a></h1>
 <h1 id="_46">问题<a class="headerlink" href="#_46" title="Permanent link">&para;</a></h1>
 <p>算法分割出来的区域，和人工标注的真实区域有多接近？</p>
@@ -614,11 +687,30 @@ f (x, y) \longrightarrow c (x, y)
 \mathrm{IoU} = \frac {\text {预测区域} \cap \text {真实区域}}{\text {预测区域} \cup \text {真实区域}}
 \]</div>
 <h1 id="_47">理解<a class="headerlink" href="#_47" title="Permanent link">&para;</a></h1>
+<ul>
+<li>交集越大，说明分割越准确；</li>
+<li>并集越大，说明总体覆盖范围越广；</li>
+<li>IoU 越接近 1，分割结果越好。</li>
+</ul>
 <h1 id="_48">图像分割的应用<a class="headerlink" href="#_48" title="Permanent link">&para;</a></h1>
 <h1 id="_49">分割是图像理解的重要基础<a class="headerlink" href="#_49" title="Permanent link">&para;</a></h1>
+<ul>
+<li>医学诊断：分割肿瘤、血管、器官；</li>
+<li>自动驾驶：分割道路、车道线、车辆、行人；</li>
+<li>遥感分析：分割建筑、水体、农田、森林；</li>
+<li>工业检测：分割裂纹、污点、缺陷区域；</li>
+<li>智能修图：人像抠图、背景替换、主体增强。</li>
+</ul>
 <h1 id="_50">一句话<a class="headerlink" href="#_50" title="Permanent link">&para;</a></h1>
 <p>分割把图像从 “像素矩阵” 变成了 “有意义的区域”。</p>
 <h1 id="_51">第四部分阶段小结<a class="headerlink" href="#_51" title="Permanent link">&para;</a></h1>
+<p>① 图像分割的目标是把图像划分成有意义的区域。
+② 阈值分割适合目标与背景差异明显的场景。
+③ 区域生长从种子点出发，逐步合并相似像素。
+4 边缘方法关注 “边界在哪里”。
+⑤ 区域方法关注 “哪些像素属于自己”。
+⑥ 语义分割进一步要求判断每个像素的类别。
+⑦ 深度学习方法可以结合局部特征与上下文语义。</p>
 <h1 id="_52">下一步<a class="headerlink" href="#_52" title="Permanent link">&para;</a></h1>
 <p>分割可以得到目标区域，但我们还希望进一步描述图像内容。接下来：图像特征与目标识别。</p>
 

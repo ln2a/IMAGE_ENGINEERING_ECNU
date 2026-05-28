@@ -53,6 +53,8 @@
       
     
     
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -517,8 +519,326 @@
 
 
 <h1 id="_1">第一部分 图像形成与数字图像基础<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<h1 id="_2">图像从哪里来？<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
-<h1 id="_3">下一讲<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
+<h1 id="_2">图像从哪里来：图像形成与数字图像基础<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<h1 id="_3">核心问题<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
+<p>计算机看到的图像，不是 “照片”，而是由成像系统采集、采样、量化后得到的数字矩阵。</p>
+<h1 id="1">1. 成像过程<a class="headerlink" href="#1" title="Permanent link">&para;</a></h1>
+<ul>
+<li>真实三维世界</li>
+<li>光照与物体反射</li>
+<li>相机镜头成像</li>
+<li>传感器接收光信号</li>
+<li>转换为数字图像</li>
+</ul>
+<h1 id="2">2. 数字图像表示<a class="headerlink" href="#2" title="Permanent link">&para;</a></h1>
+<ul>
+<li>灰度图：二维矩阵</li>
+<li>彩色图：三通道矩阵</li>
+<li>图像本质：空间位置上的数值函数</li>
+</ul>
+<div class="arithmatex">\[
+I (x, y) \in [ 0, 2 5 5 ]
+\]</div>
+<div class="arithmatex">\[
+I (x, y) = (R, G, B)
+\]</div>
+<h1 id="_4">需要理解的几个关键词<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h1>
+<p>像素、分辨率、颜色空间、采样、量化、噪声、模糊、曝光、动态范围</p>
+<h1 id="_5">引导性问题<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h1>
+<p>为什么同一个场景，用不同手机拍出来的图像会不一样？</p>
+<h1 id="banana-through-every-scan">Banana Through Every Scan<a class="headerlink" href="#banana-through-every-scan" title="Permanent link">&para;</a></h1>
+<p><img alt="15cf67d9c2e325450224b2d3653cc026e504195644043ee63bfc1e2f9af6c22e.jpg" src="../../images/15cf67d9c2e325450224b2d3653cc026e504195644043ee63bfc1e2f9af6c22e.jpg" /></p>
+<p><img alt="ac6d10d3750e1ddecdac7525bb9815ec722ed7ae3d9e128a80e08081f6f3cb9e.jpg" src="../../images/ac6d10d3750e1ddecdac7525bb9815ec722ed7ae3d9e128a80e08081f6f3cb9e.jpg" /></p>
+<p><img alt="243976078df7e13791023610218f21276faddc57e8554a2209d044d097f62d4a.jpg" src="../../images/243976078df7e13791023610218f21276faddc57e8554a2209d044d097f62d4a.jpg" /></p>
+<p><img alt="7e64bef9618f9bdfbe39c56756397ca74656dd8f91bea85a2c1ff344f2a530d3.jpg" src="../../images/7e64bef9618f9bdfbe39c56756397ca74656dd8f91bea85a2c1ff344f2a530d3.jpg" /></p>
+<h1 id="ct">树的 CT<a class="headerlink" href="#ct" title="Permanent link">&para;</a></h1>
+<p><img alt="c66688daea1d33f472e44b1afab68767d24504e5daa840e802349f5f4ff844cc.jpg" src="../../images/c66688daea1d33f472e44b1afab68767d24504e5daa840e802349f5f4ff844cc.jpg" /></p>
+<h1 id="_6">同一个物体，为什么会有不同的图像？<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h1>
+<h1 id="_7">观察现象<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h1>
+<p>同一个香蕉，在普通照片、X 光、MRI、CT 中呈现出完全不同的样子。</p>
+<h1 id="_8">普通照片<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h1>
+<ul>
+<li>主要记录物体表面的颜色和亮度</li>
+<li>依赖可见光反射</li>
+<li>更接近人眼看到的结果</li>
+</ul>
+<h1 id="mri">MRI 图像<a class="headerlink" href="#mri" title="Permanent link">&para;</a></h1>
+<ul>
+<li>反映组织中氢原子信号差异</li>
+<li>对软组织成像效果较好</li>
+<li>医学诊断中非常重要</li>
+</ul>
+<h1 id="x">X 光图像<a class="headerlink" href="#x" title="Permanent link">&para;</a></h1>
+<ul>
+<li>反映射线穿透后的衰减差异</li>
+<li>常用于观察内部结构</li>
+<li>骨骼、金属等高密度区域更明显</li>
+</ul>
+<h1 id="ct_1">CT 图像<a class="headerlink" href="#ct_1" title="Permanent link">&para;</a></h1>
+<ul>
+<li>从多个角度采集 X 光投影</li>
+<li>通过重建算法得到断层图像</li>
+<li>可以观察物体或人体内部切片</li>
+</ul>
+<h1 id="_9">关键理解<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h1>
+<p>图像不是 “客观世界本身”，而是某种成像机制下得到的信息表达。</p>
+<h1 id="ct_2">以 CT 为例：图像可以是 “计算” 出来的<a class="headerlink" href="#ct_2" title="Permanent link">&para;</a></h1>
+<h1 id="_10">直观理解<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h1>
+<p>普通照片通常是一次成像，而 CT 图像不是简单 “拍” 出来的，而是通过多个角度的测量数据重建出来的。</p>
+<p>多角度投影数据 → 重建算法 → 断层图像</p>
+<h1 id="ct_3">CT 采集什么？<a class="headerlink" href="#ct_3" title="Permanent link">&para;</a></h1>
+<ul>
+<li>X 光从不同角度穿过物体</li>
+<li>探测器记录射线衰减程度</li>
+<li>得到一组投影数据</li>
+</ul>
+<h1 id="ct_4">CT 重建什么？<a class="headerlink" href="#ct_4" title="Permanent link">&para;</a></h1>
+<ul>
+<li>反推出物体内部结构</li>
+<li>得到二维切片图像</li>
+<li>多张切片可组成三维体数据</li>
+</ul>
+<h1 id="_11">关键点<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h1>
+<p>有些图像不是直接拍摄得到的，而是由观测数据经过数学模型和算法重建得到的。</p>
+<h1 id="_12">从 “成像” 到 “模型”：图像工程中的基本抽象<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h1>
+<h1 id="_13">为什么要建立数学模型？<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h1>
+<p>真实成像过程往往很复杂。为了让计算机能够处理图像，我们需要把成像过程抽象成可以计算、分析和优化的数学模型。</p>
+<p><img alt="77b1370cf83ecefbf66c07b0431915c95150fbe25e37fe96876c5a11ddd99a7c.jpg" src="../../images/77b1370cf83ecefbf66c07b0431915c95150fbe25e37fe96876c5a11ddd99a7c.jpg" /></p>
+<h1 id="_14">未知对象<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h1>
+<ul>
+<li><span class="arithmatex">\(x\)</span> : 真实图像或物体结构</li>
+<li>可能是二维图像</li>
+<li>也可能是三维体数据</li>
+</ul>
+<h1 id="_15">观测结果<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h1>
+<ul>
+<li><span class="arithmatex">\(y\)</span> ：设备采集到的数据</li>
+<li>可能是照片</li>
+<li>也可能是投影、回波或传感器信号</li>
+</ul>
+<h1 id="_16">关键理解<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h1>
+<p>图像工程不是只处理 “已经存在的图像”，也研究图像是怎样被测量、形成和恢复出来的。</p>
+<h1 id="_17">一个统一的成像模型<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h1>
+<h1 id="_18">常见抽象<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h1>
+<p>很多成像过程都可以写成：</p>
+<div class="arithmatex">\[
+y = A x + n
+\]</div>
+<ul>
+<li><span class="arithmatex">\(x\)</span> ：真实图像或物体结构；
+A: 成像系统或测量过程；- <span class="arithmatex">\(y\)</span> ：设备实际采集到的数据；</li>
+<li><span class="arithmatex">\(n\)</span> ：噪声、误差或干扰。</li>
+</ul>
+<h1 id="a">不同任务中的 <span class="arithmatex">\(A\)</span><a class="headerlink" href="#a" title="Permanent link">&para;</a></h1>
+<ul>
+<li>普通拍照：相机成像过程；</li>
+<li>图像模糊：模糊核或运动轨迹；</li>
+<li>CT 成像：多角度投影过程；</li>
+<li>图像压缩：信息编码与丢失过程。</li>
+</ul>
+<h1 id="_19">一句话<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h1>
+<p>看似不同的图像问题，背后常常有相似的数学结构。</p>
+<h1 id="_20">正问题与逆问题<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h1>
+<h1 id="_21">正问题<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h1>
+<p>已知真实图像 <span class="arithmatex">\(x\)</span> 和成像系统 <span class="arithmatex">\(A\)</span> ，求观测数据 <span class="arithmatex">\(y: x \longrightarrow y, \quad y = Ax + n\)</span></p>
+<h1 id="_22">逆问题<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h1>
+<p>已知观测数据 y 和成像系统 A，反过来恢复真实图像 <span class="arithmatex">\(x: y \longrightarrow x\)</span></p>
+<h1 id="_23">正问题<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h1>
+<ul>
+<li>模拟成像过程</li>
+<li>通常比较直接
+例如：清晰图像变成模糊图像</li>
+</ul>
+<h1 id="_24">逆问题<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h1>
+<ul>
+<li>从观测结果反推原因</li>
+<li>通常更加困难
+例如：模糊图像恢复清晰图像</li>
+</ul>
+<h1 id="_25">一个简单例子：图像去噪<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h1>
+<h1 id="_26">问题<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h1>
+<p>观测图像 y 是真实图像 x 加上噪声得到的： <span class="arithmatex">\(y = x + n\)</span></p>
+<h1 id="_27">恢复模型<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h1>
+<div class="arithmatex">\[
+\min _ {x} \underbrace {\| x - y \| ^ {2}} _ {不要偏离原图太多} + \lambda \underbrace {R (x)} _ {让图像更平滑或更有结构}
+\]</div>
+<h1 id="_28">只相信数据<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h1>
+<ul>
+<li>直接取 <span class="arithmatex">\(x = y\)</span></li>
+<li>噪声也被保留下来</li>
+</ul>
+<h1 id="_29">正则过强<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h1>
+<ul>
+<li>噪声减少</li>
+<li>细节和边缘也可能被抹掉</li>
+</ul>
+<h1 id="_30">一个简单例子：图像去模糊<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h1>
+<h1 id="_31">问题<a class="headerlink" href="#_31" title="Permanent link">&para;</a></h1>
+<p>拍照时手抖、物体运动或镜头失焦，都可能导致图像模糊。</p>
+<div class="arithmatex">\[
+y = k * x + n
+\]</div>
+<ul>
+<li><span class="arithmatex">\(x\)</span> ：清晰图像；</li>
+<li><span class="arithmatex">\(k\)</span> ：模糊核；</li>
+<li>*：卷积操作；</li>
+<li><span class="arithmatex">\(y\)</span> ：观测到的模糊图像；</li>
+<li><span class="arithmatex">\(n\)</span> ：噪声或误差。</li>
+</ul>
+<h1 id="_32">恢复目标<a class="headerlink" href="#_32" title="Permanent link">&para;</a></h1>
+<div class="arithmatex">\[
+\min _ {x} \| k * x - y \| ^ {2} + \lambda R (x)
+\]</div>
+<h1 id="_33">为什么难？<a class="headerlink" href="#_33" title="Permanent link">&para;</a></h1>
+<p>模糊会损失边缘和纹理等高频细节，而噪声又会干扰恢复过程。</p>
+<h1 id="_34">去噪与去模糊有什么不同？<a class="headerlink" href="#_34" title="Permanent link">&para;</a></h1>
+<h1 id="_35">图像去噪<a class="headerlink" href="#_35" title="Permanent link">&para;</a></h1>
+<div class="arithmatex">\[
+y = x + n
+\]</div>
+<ul>
+<li>主要问题是随机扰动</li>
+<li>图像结构大体还在</li>
+<li>目标是去除噪声、保留细节</li>
+</ul>
+<h1 id="_36">图像去模糊<a class="headerlink" href="#_36" title="Permanent link">&para;</a></h1>
+<div class="arithmatex">\[
+y = k * x + n
+\]</div>
+<ul>
+<li>细节被扩散或混合</li>
+<li>边缘变宽，纹理变弱</li>
+<li>目标是恢复丢失的高频信息</li>
+</ul>
+<h1 id="_37">关键区别<a class="headerlink" href="#_37" title="Permanent link">&para;</a></h1>
+<p>去噪更多是 “去掉多出来的干扰”，去模糊更多是 “找回被混合掉的细节”。</p>
+<h1 id="_38">一个简单例子：图像超分辨率<a class="headerlink" href="#_38" title="Permanent link">&para;</a></h1>
+<h1 id="_39">问题<a class="headerlink" href="#_39" title="Permanent link">&para;</a></h1>
+<p>低分辨率图像缺少细节，希望恢复出更高分辨率的图像。</p>
+<div class="arithmatex">\[
+y = D x + n
+\]</div>
+<ul>
+<li><span class="arithmatex">\(x\)</span> ：高分辨率图像；</li>
+<li><span class="arithmatex">\(D\)</span> : 下采样过程；- <span class="arithmatex">\(y\)</span> ：低分辨率图像；</li>
+<li><span class="arithmatex">\(n\)</span> ：噪声或误差。</li>
+</ul>
+<h1 id="_40">恢复目标<a class="headerlink" href="#_40" title="Permanent link">&para;</a></h1>
+<div class="arithmatex">\[
+\min _ {x} \| D x - y \| ^ {2} + \lambda R (x)
+\]</div>
+<h1 id="_41">课堂提问<a class="headerlink" href="#_41" title="Permanent link">&para;</a></h1>
+<p>电影里 “把模糊监控无限放大后看清车牌” 的情节，为什么现实中并不总是可行？</p>
+<h1 id="_42">图像恢复中的共同结构<a class="headerlink" href="#_42" title="Permanent link">&para;</a></h1>
+<h1 id="_43">看似不同的问题<a class="headerlink" href="#_43" title="Permanent link">&para;</a></h1>
+<p>去噪、去模糊、超分辨率、CT 重建，看起来任务不同。</p>
+<p>去噪 : <span class="arithmatex">\(y = x + n\)</span></p>
+<p>去模糊 : <span class="arithmatex">\(y = k * x + n\)</span></p>
+<p>超分辨率： <span class="arithmatex">\(y = Dx + n\)</span></p>
+<p>CT 重建 : y = Ax + n</p>
+<h1 id="_44">共同形式<a class="headerlink" href="#_44" title="Permanent link">&para;</a></h1>
+<div class="arithmatex">\[
+\min _ {x} \| A x - y \| ^ {2} + \lambda R (x)
+\]</div>
+<h1 id="_45">课程观点<a class="headerlink" href="#_45" title="Permanent link">&para;</a></h1>
+<p>图像工程中很多问题不是孤立的，而是可以放在统一的建模框架下理解。</p>
+<h1 id="_46">图像先验：什么样的图像更合理？<a class="headerlink" href="#_46" title="Permanent link">&para;</a></h1>
+<h1 id="_47">先验的含义<a class="headerlink" href="#_47" title="Permanent link">&para;</a></h1>
+<p>先验就是我们对 “自然图像通常具有哪些规律” 的经验判断。</p>
+<h1 id="_48">传统图像先验<a class="headerlink" href="#_48" title="Permanent link">&para;</a></h1>
+<ul>
+<li>图像通常局部平滑</li>
+<li>边缘处允许明显变化</li>
+<li>梯度往往具有稀疏性</li>
+<li>相似纹理可能重复出现</li>
+</ul>
+<h1 id="_49">领域图像先验<a class="headerlink" href="#_49" title="Permanent link">&para;</a></h1>
+<ul>
+<li>医学图像有解剖结构规律</li>
+<li>遥感图像有地物分布规律</li>
+<li>人脸图像有五官结构规律</li>
+<li>工业图像有规则纹理和缺陷模式</li>
+</ul>
+<h1 id="_50">一句话<a class="headerlink" href="#_50" title="Permanent link">&para;</a></h1>
+<p>没有先验，很多逆问题无法稳定求解；先验越合适，恢复结果越可靠。</p>
+<h1 id="_51">传统方法：人工设计先验<a class="headerlink" href="#_51" title="Permanent link">&para;</a></h1>
+<h1 id="_52">基本思路<a class="headerlink" href="#_52" title="Permanent link">&para;</a></h1>
+<p>传统图像恢复方法通常把先验写成一个显式的正则项：</p>
+<div class="arithmatex">\[
+\min _ {x} \| A x - y \| ^ {2} + \lambda R (x)
+\]</div>
+<h1 id="_53">常见正则项<a class="headerlink" href="#_53" title="Permanent link">&para;</a></h1>
+<p>- 平滑正则</p>
+<div class="arithmatex">\[
+R (x) = \| \nabla x \| ^ {2}
+\]</div>
+<p>- 全变差正则</p>
+<div class="arithmatex">\[
+R (x) = \| \nabla x \| _ {1}
+\]</div>
+<h1 id="_54">特点<a class="headerlink" href="#_54" title="Permanent link">&para;</a></h1>
+<ul>
+<li>模型清楚</li>
+<li>可解释性较强</li>
+<li>便于数学分析</li>
+<li>但表达能力有限</li>
+</ul>
+<h1 id="_55">深度学习方法：从数据中学习先验<a class="headerlink" href="#_55" title="Permanent link">&para;</a></h1>
+<h1 id="_56">基本思路<a class="headerlink" href="#_56" title="Permanent link">&para;</a></h1>
+<p>深度学习方法不一定显式写出 <span class="arithmatex">\(R(x)\)</span> ，而是从大量样本中学习图像规律。</p>
+<div class="arithmatex">\[
+x \approx f _ {\theta} (y)
+\]</div>
+<ul>
+<li><span class="arithmatex">\(y\)</span> ：低质量图像，如带噪、模糊、低分辨率图像；</li>
+<li><span class="arithmatex">\(x\)</span> ：目标图像，如清晰、干净、高分辨率图像；</li>
+<li><span class="arithmatex">\(f_{\theta}\)</span> ：由神经网络表示的恢复模型；</li>
+<li><span class="arithmatex">\(\theta\)</span> ：通过训练数据学习得到的参数。</li>
+</ul>
+<h1 id="_57">理解方式<a class="headerlink" href="#_57" title="Permanent link">&para;</a></h1>
+<p>神经网络可以看作从数据中学习了一个复杂的图像先验或恢复规则。</p>
+<h1 id="_58">传统方法与深度学习方法的对比<a class="headerlink" href="#_58" title="Permanent link">&para;</a></h1>
+<h1 id="_59">传统模型驱动方法<a class="headerlink" href="#_59" title="Permanent link">&para;</a></h1>
+<ul>
+<li>显式写出成像模型</li>
+<li>显式设计正则项</li>
+<li>可解释性较好</li>
+<li>对数据依赖较少</li>
+<li>复杂场景下能力有限</li>
+</ul>
+<h1 id="_60">深度学习数据驱动方法<a class="headerlink" href="#_60" title="Permanent link">&para;</a></h1>
+<ul>
+<li>从数据中学习映射</li>
+<li>表达能力强</li>
+<li>效果常常更好</li>
+<li>依赖数据和算力</li>
+<li>泛化性和可解释性仍是挑战</li>
+</ul>
+<h1 id="_61">发展趋势<a class="headerlink" href="#_61" title="Permanent link">&para;</a></h1>
+<p>现代图像工程越来越强调模型驱动与数据驱动的结合。</p>
+<h1 id="_62">模型驱动与数据驱动的结合<a class="headerlink" href="#_62" title="Permanent link">&para;</a></h1>
+<h1 id="_63">一种现代思路<a class="headerlink" href="#_63" title="Permanent link">&para;</a></h1>
+<p>不是完全抛弃传统模型，而是把成像模型、优化算法和神经网络结合起来。</p>
+<p>物理成像模型 + 优化思想 + 深度网络 <span class="arithmatex">\(\Longrightarrow\)</span> 现代图像恢复方法</p>
+<ul>
+<li>用 <span class="arithmatex">\(A\)</span> 描述真实成像过程；</li>
+<li>用数据保真项保证结果不偏离观测；</li>
+<li>用神经网络学习复杂先验；</li>
+<li>用迭代结构增强可解释性和稳定性。</li>
+</ul>
+<h1 id="_64">课程主线<a class="headerlink" href="#_64" title="Permanent link">&para;</a></h1>
+<p>传统图像处理提供模型和思想，深度学习提供更强的表达能力。</p>
+<h1 id="_65">从图像形成到图像处理<a class="headerlink" href="#_65" title="Permanent link">&para;</a></h1>
+<h1 id="_66">到目前为止，我们已经回答了第一个问题<a class="headerlink" href="#_66" title="Permanent link">&para;</a></h1>
+<h1 id="_67">图像从哪里来？<a class="headerlink" href="#_67" title="Permanent link">&para;</a></h1>
+<ul>
+<li>图像来自不同的成像机制；</li>
+<li>数字图像来自采样和量化；</li>
+<li>很多成像过程可以写成 <span class="arithmatex">\(y = Ax + n\)</span> ;</li>
+<li>从观测恢复图像往往是逆问题；</li>
+<li>逆问题需要结合数据保真和图像先验。</li>
+</ul>
+<h1 id="_68">下一讲<a class="headerlink" href="#_68" title="Permanent link">&para;</a></h1>
 <p>现实中的图像经常存在噪声、模糊、低对比度、光照不均等问题。</p>
 <p>如何让图像变得更清楚、更适合后续分析？</p>
 <p>这就进入第二部分：图像增强与滤波。</p>

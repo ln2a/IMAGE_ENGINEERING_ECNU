@@ -53,6 +53,8 @@
       
     
     
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -522,12 +524,28 @@
 <p>平滑滤波可以减弱噪声，但也可能让边缘变得模糊。如果我们希望突出物体轮廓、纹理细节和结构变化，就需要进行锐化与边缘检测。</p>
 <p>原始图像 → 锐化处理 → 边缘和细节更明显</p>
 <h1 id="_4">锐化<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h1>
+<ul>
+<li>增强图像细节</li>
+<li>使边缘更加清楚</li>
+<li>改善视觉清晰度</li>
+</ul>
 <h1 id="_5">边缘检测<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h1>
+<ul>
+<li>找出灰度变化明显的位置</li>
+<li>提取目标轮廓</li>
+<li>为分割、识别做准备</li>
+</ul>
 <h1 id="_6">一句话<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h1>
 <p>边缘通常对应图像中灰度变化剧烈的地方。</p>
 <h1 id="_7">什么是边缘？<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h1>
 <h1 id="_8">直观理解<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h1>
 <p>在图像中，如果相邻区域的灰度或颜色发生明显变化，我们通常认为那里存在边缘。</p>
+<ul>
+<li>物体与背景的交界处；</li>
+<li>明暗变化明显的位置；</li>
+<li>纹理方向发生变化的位置；</li>
+<li>不同材料、不同结构的边界。</li>
+</ul>
 <h1 id="_9">数学理解<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h1>
 <p>边缘可以看作图像函数变化最快的位置。</p>
 <p>边缘 <span class="arithmatex">\(\Longleftrightarrow\)</span> 灰度变化大</p>
@@ -545,6 +563,11 @@ f _ {x} = \frac {\partial f}{\partial x}, \quad f _ {y} = \frac {\partial f}{\pa
 <div class="arithmatex">\[
 | \nabla f | = \sqrt {f _ {x} ^ {2} + f _ {y} ^ {2}}
 \]</div>
+<ul>
+<li>梯度越大，说明灰度变化越剧烈；</li>
+<li>灰度变化剧烈的位置，往往就是边缘；</li>
+<li>边缘检测可以理解为寻找梯度较大的位置。</li>
+</ul>
 <h1 id="_12">离散图像中的梯度近似<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h1>
 <h1 id="_13">问题<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h1>
 <p>数字图像不是连续函数，而是像素矩阵。因此，导数需要用差分来近似。</p>
@@ -557,6 +580,11 @@ f _ {x} (i, j) \approx f (i, j + 1) - f (i, j)
 f _ {y} (i, j) \approx f (i + 1, j) - f (i, j)
 \]</div>
 <h1 id="_16">理解<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h1>
+<ul>
+<li>如果相邻像素差别很小，说明局部比较平滑；</li>
+<li>如果相邻像素差别很大，说明可能存在边缘；</li>
+<li>差分越大，边缘响应越强。</li>
+</ul>
 <h1 id="sobel">Sobel 算子：常用的边缘检测方法<a class="headerlink" href="#sobel" title="Permanent link">&para;</a></h1>
 <h1 id="_17">基本思想<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h1>
 <p>Sobel 算子用两个卷积模板分别估计水平方向和竖直方向的灰度变化。</p>
@@ -567,6 +595,11 @@ G _ {x} = \left[ \begin{array}{c c c} - 1 &amp; 0 &amp; 1 \\ - 2 &amp; 0 &amp; 2
 G = \sqrt {G _ {x} ^ {2} + G _ {y} ^ {2}}
 \]</div>
 <h1 id="_18">特点<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h1>
+<ul>
+<li>能突出边缘位置；</li>
+<li>对噪声比简单差分更稳健；</li>
+<li>是最经典的边缘检测方法之一。</li>
+</ul>
 <h1 id="_19">边缘检测例子<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h1>
 <p><img alt="03dde2853c86a8e0cec9865a608e433022499a76d8e4611a94ae35f95b51e2fd.jpg" src="../../images/03dde2853c86a8e0cec9865a608e433022499a76d8e4611a94ae35f95b51e2fd.jpg" /></p>
 <p><img alt="56c78fce2ab4e2ca4ea5b6d9f9356bc1fe2b7ee0f4cd80b2f9aecd3b130fbd66.jpg" src="../../images/56c78fce2ab4e2ca4ea5b6d9f9356bc1fe2b7ee0f4cd80b2f9aecd3b130fbd66.jpg" /></p>
@@ -579,6 +612,11 @@ G = \sqrt {G _ {x} ^ {2} + G _ {y} ^ {2}}
 g = f + \alpha (f - f _ {\text { smooth }})
 \]</div>
 <p>其中：</p>
+<ul>
+<li><span class="arithmatex">\(f\)</span> : 原始图像；- <span class="arithmatex">\(f_{\mathrm{smooth}}\)</span> ：平滑后的图像；</li>
+<li><span class="arithmatex">\(f - f_{\mathrm{smooth}}\)</span> ：图像中的细节部分；</li>
+<li><span class="arithmatex">\(\alpha\)</span> ：锐化强度。</li>
+</ul>
 <h1 id="_22">直观理解<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h1>
 <p>先找出图像中 “被平滑掉的细节”，再把这些细节加回去。</p>
 <h1 id="_23">拉普拉斯算子：二阶导数锐化<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h1>
@@ -604,15 +642,41 @@ g = f + \lambda \Delta f
 <h1 id="_26">锐化与平滑的关系<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h1>
 <h1 id="_27">看似相反，其实互补<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h1>
 <h1 id="_28">平滑滤波<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h1>
+<ul>
+<li>减弱噪声</li>
+<li>抑制高频成分</li>
+<li>图像更柔和</li>
+<li>可能模糊边缘</li>
+</ul>
 <h1 id="_29">锐化处理<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h1>
+<ul>
+<li>增强细节</li>
+<li>突出高频成分</li>
+<li>边缘更清楚</li>
+<li>可能放大噪声</li>
+</ul>
 <h1 id="_30">工程经验<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h1>
 <p>实际处理中，常常需要先适当去噪，再进行边缘检测或锐化。</p>
 <p>去噪 → 锐化 → 边缘检测</p>
 <h1 id="_31">边缘检测有什么用？<a class="headerlink" href="#_31" title="Permanent link">&para;</a></h1>
 <h1 id="_32">边缘是图像理解的重要线索<a class="headerlink" href="#_32" title="Permanent link">&para;</a></h1>
+<ul>
+<li>在医学图像中，帮助观察器官、病灶和组织边界；</li>
+<li>在遥感图像中，帮助提取道路、河流、建筑轮廓；</li>
+<li>在工业检测中，帮助发现裂纹、划痕和缺陷；</li>
+<li>在自动驾驶中，帮助识别车道线、车辆和行人轮廓；</li>
+<li>在文档图像中，帮助提取文字边界和版面结构。</li>
+</ul>
 <h1 id="_33">一句话<a class="headerlink" href="#_33" title="Permanent link">&para;</a></h1>
 <p>边缘检测不是最终目的，而是许多图像分析任务的基础步骤。</p>
 <h1 id="_34">第三部分阶段小结<a class="headerlink" href="#_34" title="Permanent link">&para;</a></h1>
+<p>① 边缘通常对应图像中灰度变化剧烈的位置。
+② 梯度可以描述图像的一阶变化。
+③ 梯度幅值越大，边缘响应通常越强。
+4 数字图像中的导数通常用差分近似。
+⑤ Sobel 算子是经典的一阶边缘检测方法。
+⑥ 锐化可以增强图像细节，但也可能放大噪声。
+7 平滑与锐化并不是完全对立，而是需要配合使用。</p>
 <h1 id="_35">下一步<a class="headerlink" href="#_35" title="Permanent link">&para;</a></h1>
 <p>有了边缘之后，我们还希望进一步把图像中的目标区域分离出来。这就进入下一部分：图像分割。</p>
 

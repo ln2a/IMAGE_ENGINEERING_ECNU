@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(MSYS2_ARG_CONV_EXCL=\"*\" wsl bash -c 'ls -la /home/ln2a/dev/classwork/image_website/ | grep -v \"^total\\\\|^\\\\.\\\\|\\\\.\\\\.$\" && echo \"---\" && ls /home/ln2a/dev/classwork/image_website/ | grep -v python_tutorial')"
+    ]
+  }
+}
