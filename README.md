@@ -4,7 +4,7 @@
 
 ## 在线访问
 
-- **Cloudflare Pages：** [websiteforclass.594698134.workers.dev](https://websiteforclass.594698134.workers.dev)
+- **Cloudflare Pages：** [https://image-engineering-ecnu.pages.dev/](https://image-engineering-ecnu.pages.dev/)
 - 网站由 MkDocs 构建，使用 Material 主题，部署于 Cloudflare Pages。
 
 ## Python 演示代码
