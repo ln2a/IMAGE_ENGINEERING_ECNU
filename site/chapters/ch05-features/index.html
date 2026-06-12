@@ -1219,17 +1219,6 @@
   <a href="#_61" class="md-nav__link">
     <span class="md-ellipsis">
       
-        演示代码
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_62" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         一句话总结
       
     </span>
@@ -1998,17 +1987,6 @@
   <a href="#_61" class="md-nav__link">
     <span class="md-ellipsis">
       
-        演示代码
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_62" class="md-nav__link">
-    <span class="md-ellipsis">
-      
         一句话总结
       
     </span>
@@ -2240,6 +2218,7 @@ g (i, j) = \sum_ {m, n} w (m, n) f (i - m, j - n)
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </code></pre></div>
+<p><a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex11_ch05.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a></p>
 <p># 输出 logits，经过 softmax 后得到每个类别的概率</p>
 <p><strong>输出形式：</strong></p>
 <p>一张图像 <span class="arithmatex">\(\longrightarrow\)</span> <span class="arithmatex">\([p_{1}, p_{2}, \ldots, p_{10}]\)</span></p>
@@ -2266,6 +2245,7 @@ g (i, j) = \sum_ {m, n} w (m, n) f (i - m, j - n)
 <a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls_head</span><span class="p">(</span><span class="n">h</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">box_head</span><span class="p">(</span><span class="n">h</span><span class="p">))</span>
 </code></pre></div>
+<p><a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex12_ch05.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a></p>
 <p># 损失 = 分类损失 + 位置框回归损失</p>
 <h2 id="_46">代码演示・图像分割<a class="headerlink" href="#_46" title="Permanent link">&para;</a></h2>
 <p><strong>任务：</strong></p>
@@ -2369,28 +2349,7 @@ g (i, j) = \sum_ {m, n} w (m, n) f (i - m, j - n)
 <li>图像中的结构如何被提取；</li>
 <li>图像中的目标如何被理解。</li>
 </ul>
-<h2 id="_61">演示代码<a class="headerlink" href="#_61" title="Permanent link">&para;</a></h2>
-<p>本章涉及的演示代码：</p>
-<table>
-<thead>
-<tr>
-<th>代码</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex11_ch05.ipynb">图像分类 CNN</a></td>
-<td>简易 CIFAR 分类网络</td>
-</tr>
-<tr>
-<td><a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex12_ch05.ipynb">目标检测</a></td>
-<td>简易检测与分割网络</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="_62">一句话总结<a class="headerlink" href="#_62" title="Permanent link">&para;</a></h2>
+<h2 id="_61">一句话总结<a class="headerlink" href="#_61" title="Permanent link">&para;</a></h2>
 <p>图像工程把现实世界中的视觉信息，转化为计算机可以处理、分析和理解的数字信息。</p>
 <p>谢谢！</p>
 

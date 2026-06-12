@@ -127,6 +127,8 @@ for a, i, ti in zip(ax, [rgb, bi, co], t):
 plt.tight_layout(); plt.show()
 ```
 
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex7_ch02.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
+
 ## 代码演示：非线性变换
 
 ![821c062c0b46d7a04d96ef03b60ec93236dd7efb66d71cac94feaabde07fcf30.jpg](../images/821c062c0b46d7a04d96ef03b60ec93236dd7efb66d71cac94feaabde07fcf30.jpg)
@@ -146,6 +148,8 @@ f, ax = plt.subplots(1, 3, figsize=(16, 8))
 for a, i, ti in zip(ax, [rgb, g06, g15], t): a.imshow(i); a.set_title(ti); a.axis("off")
 plt.tight_layout(); plt.show()
 ```
+
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex8_ch02.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
 
 ## 直方图：观察灰度分布
 
@@ -208,6 +212,8 @@ for col, (im, ti) in enumerate(zip([rgb, eq], ["Original","Equalized"])):
     ax[1, col].set_title(f"ti Histogram")
 plt.tight_layout(); plt.show()
 ```
+
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex9_ch02.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
 
 ## 图像滤波：利用邻域信息
 
@@ -309,6 +315,8 @@ for c,(im,t) in enumerate(zip([g,sp,md],["Orig","+S&P noise","Median 3×3"])):
 ax[1,3].axis("off"); plt.tight_layout(); plt.show()
 ```
 
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex10_ch02.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
+
 ## 第二部分阶段小结
 
 1 图像增强的目标是让图像更清楚、更有用。
@@ -324,16 +332,3 @@ ax[1,3].axis("off"); plt.tight_layout(); plt.show()
 平滑滤波可以去噪，但也可能模糊边缘。那么，如何突出边缘和细节？
 
 接下来：锐化与边缘检测
-
----
-
-## 演示代码
-
-本章涉及的演示代码：
-
-| 代码 | 说明 |
-|---|---|
-| [线性变换](https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex7_ch02.ipynb) | 亮度提升与对比度增强 |
-| [非线性变换](https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex8_ch02.ipynb) | Gamma 校正 |
-| [直方图均衡化](https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex9_ch02.ipynb) | YCrCb 亮度通道均衡化 |
-| [空间滤波](https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex10_ch02.ipynb) | 均值 / 高斯 / 中值滤波对比 |

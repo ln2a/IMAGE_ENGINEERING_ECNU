@@ -259,6 +259,8 @@ class TinyCifarCNN(nn.Module):
     return self.fc(x)
 ```
 
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex11_ch05.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
+
 \# 输出 logits，经过 softmax 后得到每个类别的概率
 
 **输出形式：**
@@ -295,6 +297,8 @@ def forward(self, x):
     h = self.shared(self.features(x))
     return self.cls_head(h), torch.sigmoid(self.box_head(h))
 ```
+
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex12_ch05.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
 
 \# 损失 = 分类损失 + 位置框回归损失
 
@@ -426,17 +430,6 @@ $$
 - 图像如何被增强和恢复；
 - 图像中的结构如何被提取；
 - 图像中的目标如何被理解。
-
-## 演示代码
-
-本章涉及的演示代码：
-
-| 代码 | 说明 |
-|---|---|
-| [图像分类 CNN](https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex11_ch05.ipynb) | 简易 CIFAR 分类网络 |
-| [目标检测](https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex12_ch05.ipynb) | 简易检测与分割网络 |
-
----
 
 ## 一句话总结
 

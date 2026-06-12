@@ -60,6 +60,8 @@ print("8x8 patch:")
 print(patch)
 ```
 
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex1_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
+
 ## 代码演示：采样与量化
 
 ![6b7a78340bb5f9268db4a29c31045a0a8e6cf22dc134b4b7123c136a57d77cca.jpg](../images/6b7a78340bb5f9268db4a29c31045a0a8e6cf22dc134b4b7123c136a57d77cca.jpg)
@@ -84,6 +86,8 @@ for a, i, t in zip(ax, imgs, titles):
     a.imshow(i, cmap="gray"); a.set_title(t); a.axis("off")
 plt.tight_layout(); plt.show()
 ```
+
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex2_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
 
 ## Banana Through Every Scan
 
@@ -180,6 +184,8 @@ for a, i, t in , zip(ax, [x, y, recom], ["x", "projection y", "reconstruction {
 plt.tight_layout(); plt.show()
 ```
 
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex3_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
+
 ## 从 “成像” 到 “模型”：图像工程中的基本抽象
 
 ## 为什么要建立数学模型？
@@ -258,6 +264,8 @@ for a, i, t in zip(ax, imga, titles);
 a.imshow(i, cmap='gray'); a.set_title(t); a.axis("off")
 plt.tightLayout(); plt.show()
 ```
+
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex4_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
 
 ## 正问题与逆问题
 
@@ -585,18 +593,3 @@ $$
 如何让图像变得更清楚、更适合后续分析？
 
 这就进入第二部分：图像增强与滤波。
-
----
-
-## 演示代码
-
-本章涉及的演示代码：
-
-| 代码 | 说明 |
-|---|---|
-| [数字图像矩阵](https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex1_ch01.ipynb) | 读取图像并理解为矩阵 |
-| [采样与量化](https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex2_ch01.ipynb) | 采样改变空间分辨率，量化改变灰度级数 |
-| [CT 投影与重建](https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex3_ch01.ipynb) | Radon 变换与逆重建 |
-| [统一模型 y = Ax + n](https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex4_ch01.ipynb) | 运动模糊 + 噪声模拟 |
-| [图像去噪](https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex5_ch01.ipynb) | 去噪正则化方法 |
-| [三个逆问题对比](https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex6_ch01.ipynb) | 去噪 / 去模糊 / 超分辨率对比 |
