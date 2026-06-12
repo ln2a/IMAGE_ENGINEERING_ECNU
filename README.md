@@ -15,8 +15,8 @@
 
 | 文件名 | 对应章节 | 内容 |
 |--------|----------|------|
-| `ex1_1.ipynb` | 第一章 · 演示 1 | 图像形成与数字图像基础 |
-| `ex2_1.ipynb` | 第二章 · 演示 1 | 图像增强与滤波 |
+| `ex1_ch01.ipynb` | 第一章 · 演示 1
+| `ex2_ch02.ipynb` | 第二章 · 演示 2
 
 代码通过 [Binder](https://mybinder.org/) 发布为可交互网页：
 
@@ -38,7 +38,7 @@ image_website/
 ├── python-tutorial/        # Python 演示代码（Jupyter Notebook）
 │   ├── ex1_1.ipynb
 │   ├── ex2_1.ipynb
-│   └── ex_img/             # 演示用图片
+│   └── images/             # 演示用图片
 ├── material/               # 附加素材
 ├── resources/              # MinerU 解析结果与 PDF 源文件
 ├── minerupress/            # MinerU PDF 处理工具
