@@ -6,7 +6,6 @@
 
 **授课教师：** 沈超敏
 **学院：** 计算机科学与技术学院
-**邮箱：** [cmshen@cs.ecnu.edu.cn](mailto:cmshen@cs.ecnu.edu.cn)
 
 ---
 

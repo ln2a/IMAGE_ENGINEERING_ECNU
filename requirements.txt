@@ -1,3 +1,6 @@
 opencv-python-headless
 matplotlib
 numpy
+scikit-image
+torch
+jupyter
