@@ -42,7 +42,7 @@ $$
 
 ![634f5766b68ff47b161b58067478fae4e7b2ce2223b9c93f709a84f2d7e079d6.jpg](../images/634f5766b68ff47b161b58067478fae4e7b2ce2223b9c93f709a84f2d7e079d6.jpg)
 
-### Python 实现
+**Python 实现：**
 
 \# 读取图像并把它理解为矩阵
 
@@ -66,7 +66,7 @@ print(patch)
 
 ![f468caa90114a73400a96a534bcae091bf0333ca976d81a0e11719e5e2490d7f.jpg](../images/f468caa90114a73400a96a534bcae091bf0333ca976d81a0e11719e5e2490d7f.jpg)
 
-### Python 实现
+**Python 实现：**
 
 \# 采样改变空间分辨率，量化改变灰度级数
 
@@ -165,7 +165,7 @@ plt.tight_layout(); plt.show()
 
 ![20ceb51b57329263dc374f3d411833387e8bd48d51105ac56acf836b2a0ea436.jpg](../images/20ceb51b57329263dc374f3d411833387e8bd48d51105ac56acf836b2a0ea436.jpg)
 
-### Python 实现
+**Python 实现：**
 
 ```python
 # CT: 多角度投影数据 -> 重建算法 -> 断层图像
@@ -239,7 +239,7 @@ A: 成像系统或测量过程；- $y$ ：设备实际采集到的数据；
 
 ![061e8f459514409e66bab7b1a4dbf799c3455ee434f938071ad4344cfb9a5f14.jpg](../images/061e8f459514409e66bab7b1a4dbf799c3455ee434f938071ad4344cfb9a5f14.jpg)
 
-### Python 实现
+**Python 实现：**
 
 ```python
 # 用运动模糊模拟 A，用随机流动模型 n
@@ -263,7 +263,11 @@ plt.tightLayout(); plt.show()
 
 ### 正问题
 
+```python
 已知真实图像 $x$ 和成像系统 $A$ ，求观测数据 $y: x \longrightarrow y, \quad y = Ax + n$
+```
+
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex5_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
 
 ### 逆问题
 
@@ -285,7 +289,11 @@ plt.tightLayout(); plt.show()
 
 ### 问题
 
+```python
 观测图像 y 是真实图像 x 加上噪声得到的： $y = x + n$
+```
+
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex6_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
 
 ### 恢复模型
 
@@ -295,8 +303,10 @@ $$
 
 ### 只相信数据
 
+```python
 - 直接取 $x = y$
 - 噪声也被保留下来
+```
 
 ### 正则过强
 
@@ -335,31 +345,23 @@ $$
 
 ![16ac8461e1345fe727c2eec2069ad15433d1a80459114829f5025572afc307f0.jpg](../images/16ac8461e1345fe727c2eec2069ad15433d1a80459114829f5025572afc307f0.jpg)
 
-### Python 实现
+**Python 实现：**
 
 \# 去噪：既要贴近观测 y，又要让图像更平滑
 
+```python
 import cv2, numpy as np, matplotlib.pyplot as plt
-
 y = cv2.imread("images/part1-noisy.jpg", 0) / 255.0
-
 weak = cv2.GaussianBlur(y, (0, 0), 0.7)
-
 balanced = cv2.GaussianBlur(y, (0, 0), 1.4)
-
 strong = cv2.GaussianBlur(y, (0, 0), 3.2)
-
 imgs = [y, weak, balanced, strong]
-
 titles = ["Data only", "Weak prior", "Balanced prior", "Strong prior"]
-
 fig, ax = plt.subplots(1, 4, figsize=(14, 4))
-
 for a, i, t in zip(ax, imgs, titles):
-
 a.imshow(i, cmap="gray"); a.set\_title(t); a.axis("off")
-
 plt.tight\_layout(); plt.show()
+```
 
 ## 去噪与去模糊有什么不同？
 
@@ -417,13 +419,12 @@ $$
 
 去噪、去模糊、超分辨率、CT 重建，看起来任务不同。
 
+```python
 去噪 : $y = x + n$
-
 去模糊 : $y = k * x + n$
-
 超分辨率： $y = Dx + n$
-
 CT 重建 : $y = Ax + n$
+```
 
 ### 共同形式
 
@@ -441,9 +442,10 @@ $$
 
 ![5413bdcd04fefbacdbc6f9d083ed24eefd6977512dded7da86c5ac19ca4f8ec3.jpg](../images/5413bdcd04fefbacdbc6f9d083ed24eefd6977512dded7da86c5ac19ca4f8ec3.jpg)
 
-### Python 实现
+**Python 实现：**
 
-### 逆问题：从观测 y 估计真实图像 x
+```python
+# 逆问题：从观测 y 估计真实图像 x
 # 去噪：y = x + n
 # 去模糊：y = k \* x + n
 # 超分辨率：y = D x + n
@@ -452,6 +454,7 @@ $$
 print ("Denoising removes added noise.")
 print ("Deblurring recovers mixed details.")
 print ("Super-resolution infers missing details.")
+```
 
 ## 图像先验：什么样的图像更合理？
 
@@ -572,11 +575,13 @@ $$
 
 ### 图像从哪里来？
 
+```python
 - 图像来自不同的成像机制；
 - 数字图像来自采样和量化；
 - 很多成像过程可以写成 $y = Ax + n$ ;
 - 从观测恢复图像往往是逆问题；
 - 逆问题需要结合数据保真和图像先验。
+```
 
 ### 下一讲
 

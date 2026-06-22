@@ -111,7 +111,7 @@ $$
 
 ![d65dfad614037d102dfb396b09f9a89958b139669523fdccc935eaf36343efb5.jpg](../images/d65dfad614037d102dfb396b09f9a89958b139669523fdccc935eaf36343efb5.jpg)
 
-### Python 实现
+**Python 实现：**
 
 ```python
 # 对图像做亮度提升（s=a*r+b）和对比度增强（a=1.3，b=0）
@@ -135,7 +135,7 @@ plt.tight_layout(); plt.show()
 
 ![e0cec0ffe6a59ee168b754a6bc62d2e090f4b9c83556230b10fe35a9ee5b0a8f.jpg](../images/e0cec0ffe6a59ee168b754a6bc62d2e090f4b9c83556230b10fe35a9ee5b0a8f.jpg)
 
-### Python 实现
+**Python 实现：**
 
 ```python
 # 非线性映射 s = c * r^gamma, gamma<1 提亮暗部, gamma>1 压缩暗部
@@ -192,7 +192,7 @@ $$
 
 ### 代码演示：直方图均衡化
 
-### Python 实现
+**Python 实现：**
 
 ```python
 # 绘制 RGB 三通道直方图 → 转换到 YCrCb 空间，仅对 Y（亮度）通道均衡化
@@ -296,7 +296,7 @@ $$
 
 ### 代码演示：空间滤波
 
-### Python 实现
+**Python 实现：**
 
 ```python
 # 添加高斯噪声（var=25）→ 均值滤波（3×3）与高斯滤波（3×3）对比
