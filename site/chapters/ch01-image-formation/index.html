@@ -2807,9 +2807,7 @@ A: 成像系统或测量过程；- <span class="arithmatex">\(y\)</span> ：设�
 <p><a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex4_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a></p>
 <h2 id="_22">正问题与逆问题<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h2>
 <h3 id="_23">正问题<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">已知真实图像</span> <span class="err">$</span><span class="n">x</span><span class="err">$</span> <span class="n">和成像系统</span> <span class="err">$</span><span class="n">A</span><span class="err">$</span> <span class="err">，</span><span class="n">求观测数据</span> <span class="err">$</span><span class="n">y</span><span class="p">:</span> <span class="n">x</span> \<span class="n">longrightarrow</span> <span class="n">y</span><span class="p">,</span> \<span class="n">quad</span> <span class="n">y</span> <span class="o">=</span> <span class="n">Ax</span> <span class="o">+</span> <span class="n">n</span><span class="err">$</span>
-</code></pre></div>
-<p><a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex5_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a></p>
+<p>已知真实图像 <span class="arithmatex">\(x\)</span> 和成像系统 <span class="arithmatex">\(A\)</span> ，求观测数据 <span class="arithmatex">\(y: x \longrightarrow y, \quad y = Ax + n\)</span></p>
 <h3 id="_24">逆问题<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h3>
 <p>已知观测数据 y 和成像系统 A，反过来恢复真实图像 <span class="arithmatex">\(x: y \longrightarrow x\)</span></p>
 <h3 id="_25">正问题<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h3>
@@ -2826,17 +2824,16 @@ A: 成像系统或测量过程；- <span class="arithmatex">\(y\)</span> ：设�
 </ul>
 <h2 id="_27">一个简单例子：图像去噪<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h2>
 <h3 id="_28">问题<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">观测图像</span> <span class="n">y</span> <span class="n">是真实图像</span> <span class="n">x</span> <span class="n">加上噪声得到的</span><span class="err">：</span> <span class="err">$</span><span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">n</span><span class="err">$</span>
-</code></pre></div>
-<p><a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex6_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a></p>
+<p>观测图像 y 是真实图像 x 加上噪声得到的： <span class="arithmatex">\(y = x + n\)</span></p>
 <h3 id="_29">恢复模型<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h3>
 <div class="arithmatex">\[
 \min _ {x} \underbrace {\| x - y \| ^ {2}} _ {不要偏离原图太多} + \lambda \underbrace {R (x)} _ {让图像更平滑或更有结构}
 \]</div>
 <h3 id="_30">只相信数据<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="o">-</span> <span class="n">直接取</span> <span class="err">$</span><span class="n">x</span> <span class="o">=</span> <span class="n">y</span><span class="err">$</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="o">-</span> <span class="n">噪声也被保留下来</span>
-</code></pre></div>
+<ul>
+<li>直接取 <span class="arithmatex">\(x = y\)</span></li>
+<li>噪声也被保留下来</li>
+</ul>
 <h3 id="_31">正则过强<a class="headerlink" href="#_31" title="Permanent link">&para;</a></h3>
 <ul>
 <li>噪声减少</li>
@@ -2866,18 +2863,19 @@ y = k * x + n
 <p><img alt="16ac8461e1345fe727c2eec2069ad15433d1a80459114829f5025572afc307f0.jpg" src="../../images/16ac8461e1345fe727c2eec2069ad15433d1a80459114829f5025572afc307f0.jpg" /></p>
 <p><strong>Python 实现：</strong></p>
 <p># 去噪：既要贴近观测 y，又要让图像更平滑</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span><span class="o">,</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span><span class="o">,</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">y</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/part1-noisy.jpg&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">weak</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mf">0.7</span><span class="p">)</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">balanced</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mf">1.4</span><span class="p">)</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">strong</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mf">3.2</span><span class="p">)</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">imgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">weak</span><span class="p">,</span> <span class="n">balanced</span><span class="p">,</span> <span class="n">strong</span><span class="p">]</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Data only&quot;</span><span class="p">,</span> <span class="s2">&quot;Weak prior&quot;</span><span class="p">,</span> <span class="s2">&quot;Balanced prior&quot;</span><span class="p">,</span> <span class="s2">&quot;Strong prior&quot;</span><span class="p">]</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">imgs</span><span class="p">,</span> <span class="n">titles</span><span class="p">):</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">a</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">);</span> <span class="n">a</span><span class="o">.</span><span class="n">set</span>\<span class="n">_title</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="n">a</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">plt</span><span class="o">.</span><span class="n">tight</span>\<span class="n">_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span><span class="o">,</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span><span class="o">,</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">y</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s2">&quot;images/part1-noisy.jpg&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">weak</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mf">0.7</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">balanced</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mf">1.4</span><span class="p">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">strong</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">GaussianBlur</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mf">3.2</span><span class="p">)</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">imgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">weak</span><span class="p">,</span> <span class="n">balanced</span><span class="p">,</span> <span class="n">strong</span><span class="p">]</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Data only&quot;</span><span class="p">,</span> <span class="s2">&quot;Weak prior&quot;</span><span class="p">,</span> <span class="s2">&quot;Balanced prior&quot;</span><span class="p">,</span> <span class="s2">&quot;Strong prior&quot;</span><span class="p">]</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">imgs</span><span class="p">,</span> <span class="n">titles</span><span class="p">):</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">a</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">);</span> <span class="n">a</span><span class="o">.</span><span class="n">set</span>\<span class="n">_title</span><span class="p">(</span><span class="n">t</span><span class="p">);</span> <span class="n">a</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">plt</span><span class="o">.</span><span class="n">tight</span>\<span class="n">_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
+<p><a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex5_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a></p>
 <h2 id="_37">去噪与去模糊有什么不同？<a class="headerlink" href="#_37" title="Permanent link">&para;</a></h2>
 <h3 id="_38">图像去噪<a class="headerlink" href="#_38" title="Permanent link">&para;</a></h3>
 <div class="arithmatex">\[
@@ -2919,11 +2917,10 @@ y = D x + n
 <h2 id="_45">图像恢复中的共同结构<a class="headerlink" href="#_45" title="Permanent link">&para;</a></h2>
 <h3 id="_46">看似不同的问题<a class="headerlink" href="#_46" title="Permanent link">&para;</a></h3>
 <p>去噪、去模糊、超分辨率、CT 重建，看起来任务不同。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">去噪</span> <span class="p">:</span> <span class="err">$</span><span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">n</span><span class="err">$</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">去模糊</span> <span class="p">:</span> <span class="err">$</span><span class="n">y</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">n</span><span class="err">$</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">超分辨率</span><span class="err">：</span> <span class="err">$</span><span class="n">y</span> <span class="o">=</span> <span class="n">Dx</span> <span class="o">+</span> <span class="n">n</span><span class="err">$</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">CT</span> <span class="n">重建</span> <span class="p">:</span> <span class="err">$</span><span class="n">y</span> <span class="o">=</span> <span class="n">Ax</span> <span class="o">+</span> <span class="n">n</span><span class="err">$</span>
-</code></pre></div>
+<p>去噪 : <span class="arithmatex">\(y = x + n\)</span></p>
+<p>去模糊 : <span class="arithmatex">\(y = k * x + n\)</span></p>
+<p>超分辨率： <span class="arithmatex">\(y = Dx + n\)</span></p>
+<p>CT 重建 : <span class="arithmatex">\(y = Ax + n\)</span></p>
 <h3 id="_47">共同形式<a class="headerlink" href="#_47" title="Permanent link">&para;</a></h3>
 <div class="arithmatex">\[
 \min _ {x} \| A x - y \| ^ {2} + \lambda R (x)
@@ -2934,16 +2931,17 @@ y = D x + n
 <p><img alt="db24a32fa2c21559a371fc880068a2d2ebbe7daeea8cc5f2b6c9cc03758f1dd6.jpg" src="../../images/db24a32fa2c21559a371fc880068a2d2ebbe7daeea8cc5f2b6c9cc03758f1dd6.jpg" /></p>
 <p><img alt="5413bdcd04fefbacdbc6f9d083ed24eefd6977512dded7da86c5ac19ca4f8ec3.jpg" src="../../images/5413bdcd04fefbacdbc6f9d083ed24eefd6977512dded7da86c5ac19ca4f8ec3.jpg" /></p>
 <p><strong>Python 实现：</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># 逆问题：从观测 y 估计真实图像 x</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c1"># 去噪：y = x + n</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># 去模糊：y = k \* x + n</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># 超分辨率：y = D x + n</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1"># 核心思想：</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1"># min ||A x - y||^2 + lambda R (x)</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Denoising removes added noise.&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Deblurring recovers mixed details.&quot;</span><span class="p">)</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Super-resolution infers missing details.&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># 逆问题：从观测 y 估计真实图像 x</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># 去噪：y = x + n</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># 去模糊：y = k \* x + n</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># 超分辨率：y = D x + n</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># 核心思想：</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># min ||A x - y||^2 + lambda R (x)</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Denoising removes added noise.&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Deblurring recovers mixed details.&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Super-resolution infers missing details.&quot;</span><span class="p">)</span>
 </code></pre></div>
+<p><a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex6_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a></p>
 <h2 id="_50">图像先验：什么样的图像更合理？<a class="headerlink" href="#_50" title="Permanent link">&para;</a></h2>
 <h3 id="_51">先验的含义<a class="headerlink" href="#_51" title="Permanent link">&para;</a></h3>
 <p>先验就是我们对 “自然图像通常具有哪些规律” 的经验判断。</p>
@@ -3033,12 +3031,13 @@ x \approx f _ {\theta} (y)
 <h2 id="_69">从图像形成到图像处理<a class="headerlink" href="#_69" title="Permanent link">&para;</a></h2>
 <h3 id="_70">到目前为止，我们已经回答了第一个问题<a class="headerlink" href="#_70" title="Permanent link">&para;</a></h3>
 <h3 id="_71">图像从哪里来？<a class="headerlink" href="#_71" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="o">-</span> <span class="n">图像来自不同的成像机制</span><span class="err">；</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="o">-</span> <span class="n">数字图像来自采样和量化</span><span class="err">；</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="o">-</span> <span class="n">很多成像过程可以写成</span> <span class="err">$</span><span class="n">y</span> <span class="o">=</span> <span class="n">Ax</span> <span class="o">+</span> <span class="n">n</span><span class="err">$</span> <span class="p">;</span>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="o">-</span> <span class="n">从观测恢复图像往往是逆问题</span><span class="err">；</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="o">-</span> <span class="n">逆问题需要结合数据保真和图像先验</span><span class="err">。</span>
-</code></pre></div>
+<ul>
+<li>图像来自不同的成像机制；</li>
+<li>数字图像来自采样和量化；</li>
+<li>很多成像过程可以写成 <span class="arithmatex">\(y = Ax + n\)</span> ;</li>
+<li>从观测恢复图像往往是逆问题；</li>
+<li>逆问题需要结合数据保真和图像先验。</li>
+</ul>
 <h3 id="_72">下一讲<a class="headerlink" href="#_72" title="Permanent link">&para;</a></h3>
 <p>现实中的图像经常存在噪声、模糊、低对比度、光照不均等问题。</p>
 <p>如何让图像变得更清楚、更适合后续分析？</p>

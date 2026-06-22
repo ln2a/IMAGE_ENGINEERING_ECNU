@@ -263,11 +263,7 @@ plt.tightLayout(); plt.show()
 
 ### 正问题
 
-```python
 已知真实图像 $x$ 和成像系统 $A$ ，求观测数据 $y: x \longrightarrow y, \quad y = Ax + n$
-```
-
-<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex5_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
 
 ### 逆问题
 
@@ -289,11 +285,7 @@ plt.tightLayout(); plt.show()
 
 ### 问题
 
-```python
 观测图像 y 是真实图像 x 加上噪声得到的： $y = x + n$
-```
-
-<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex6_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
 
 ### 恢复模型
 
@@ -303,10 +295,8 @@ $$
 
 ### 只相信数据
 
-```python
 - 直接取 $x = y$
 - 噪声也被保留下来
-```
 
 ### 正则过强
 
@@ -362,6 +352,8 @@ for a, i, t in zip(ax, imgs, titles):
 a.imshow(i, cmap="gray"); a.set\_title(t); a.axis("off")
 plt.tight\_layout(); plt.show()
 ```
+
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex5_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
 
 ## 去噪与去模糊有什么不同？
 
@@ -419,12 +411,13 @@ $$
 
 去噪、去模糊、超分辨率、CT 重建，看起来任务不同。
 
-```python
 去噪 : $y = x + n$
+
 去模糊 : $y = k * x + n$
+
 超分辨率： $y = Dx + n$
+
 CT 重建 : $y = Ax + n$
-```
 
 ### 共同形式
 
@@ -455,6 +448,8 @@ print ("Denoising removes added noise.")
 print ("Deblurring recovers mixed details.")
 print ("Super-resolution infers missing details.")
 ```
+
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex6_ch01.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
 
 ## 图像先验：什么样的图像更合理？
 
@@ -575,13 +570,11 @@ $$
 
 ### 图像从哪里来？
 
-```python
 - 图像来自不同的成像机制；
 - 数字图像来自采样和量化；
 - 很多成像过程可以写成 $y = Ax + n$ ;
 - 从观测恢复图像往往是逆问题；
 - 逆问题需要结合数据保真和图像先验。
-```
 
 ### 下一讲
 
