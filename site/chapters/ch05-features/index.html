@@ -1145,8 +1145,8 @@ h(k)=\#\{(x,y)\mid I(x,y)\text{ 落在第 }k\text{ 个颜色区间}\}
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nb">print</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
 </code></pre></div>
+<p><a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex11_ch05.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a></p>
 <p>完整代码、数据生成函数和可视化均包含在实验 1 中。</p>
-<p><a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex11_ch05.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin: 4px 0 12px;">运行实验 1：特征与分类 →</a></p>
 <h2 id="2">2. 从特征到图像分类<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <p>图像分类回答“整张图像是什么”。传统流程为：</p>
 <div class="arithmatex">\[
@@ -1172,6 +1172,7 @@ h(k)=\#\{(x,y)\mid I(x,y)\text{ 落在第 }k\text{ 个颜色区间}\}
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_features</span><span class="p">)</span>
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">accuracy</span> <span class="o">=</span> <span class="p">(</span><span class="n">prediction</span> <span class="o">==</span> <span class="n">test_labels</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </code></pre></div>
+<p><a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex12_ch05.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a></p>
 <h3 id="23">2.3 分类结果<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
 <p><img alt="形状分类可视化" src="../../images/ch05-classification-preview.png" /></p>
 <p>Notebook 会实际计算测试集准确率、绘制混淆矩阵，并逐图显示预测类别和真实类别。
@@ -1204,7 +1205,6 @@ h(k)=\#\{(x,y)\mid I(x,y)\text{ 落在第 }k\text{ 个颜色区间}\}
 <p><img alt="目标检测与边界框" src="../../images/ch05-detection-preview.png" /></p>
 <p>场景中包含多个目标。程序会精确定位每个独立连通区域，并在图像上画出预测框。
 同时保留前景掩膜，因此这个实验也展示了像素级分割结果。</p>
-<p><a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex12_ch05.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin: 4px 0 12px;">运行实验 2：多目标检测与画框 →</a></p>
 <h3 id="33">3.3 为什么这个检测器效果好？<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
 <p>当前数据满足两个明确先验：背景接近白色，目标彼此不粘连。因此，前景分割可以稳定
 找到目标像素，连通域的最小外接矩形也就非常接近真实框。</p>

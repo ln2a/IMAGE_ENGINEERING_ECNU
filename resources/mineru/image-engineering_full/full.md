@@ -58,48 +58,30 @@ $$
 
 ## 代码演示：数字图像矩阵
 
-![](images/bfa15f81657734d2ce9fd74900c86daf428fa53b4111f580c1826cd481706a9b.jpg)
+![](images/6542b19893e97a99196419c7e3938575988f2b5ed2e364cbc57af914ca6a66f0.jpg)
 
 <details>
 <summary>natural_image</summary>
 
-Illustration of a banana with three small brown seeds (no text or symbols)
+Illustration of a banana with three small dark seeds (no text or symbols)
 </details>
 
 Original
 
 Digital image = numeric matrix  
-![](images/bd590b586e663768edfb03714d341a3bee3fe704505e2fed4cdfead7c03d22bf.jpg)
-
-<details>
-<summary>natural_image</summary>
-
-Illustration of a yellow measuring tape captured by a sensor, with no text or symbols present.
-</details>
-
-![](images/2d0e5784301f49c74038103e6c4e20c08126be06934fff0088bc0dd52a326cfa.jpg)
+![](images/634f5766b68ff47b161b58067478fae4e7b2ce2223b9c93f709a84f2d7e079d6.jpg)
 
 <details>
 <summary>text_image</summary>
 
+Scene captured by a sensor
 Pixels: a sampled grid
-</details>
-
-![](images/b29f6ee266781954c12cdf3e152dca37a941c4ddc0917a4c11d5a0590807bab9.jpg)
-
-<details>
-<summary>heatmap</summary>
-
 Pixel values in an 8 x 8 patch
-| | 236 | 236 | 236 | 236 | 236 | 236 | 236 |
-|---|---|---|---|---|---|---|---|
-| Row 1 | 51 | 236 | 236 | 236 | 236 | 236 | 236 |
-| Row 2 | 138 | 153 | 154 | 154 | 160 | 150 | 163 |
-| Row 3 | 236 | 144 | 153 | 150 | 159 | 149 | 168 |
-| Row 4 | 236 | 236 | 236 | 236 | 236 | 236 | 236 |
-| Row 5 | 236 | 236 | 236 | 236 | 236 | 236 | 236 |
-| Row 6 | 236 | 236 | 236 | 236 | 236 | 236 | 236 |
-The image contains a grid of cells with the same label 'Pixel values in an 8 x 8 patch' at the top. The cell values are explicitly labeled as '236'.
+236 236 236 236 236 236 236 236
+51 236 236 236 236 236 236 236 236
+138 153 154 154 160 150 163 153
+236 144 153 150 159 149 168 164
+236 236 236 236 236 236 236 236
 </details>
 
 Pixel Matrix
@@ -122,7 +104,7 @@ print(patch)
 
 ## 代码演示：采样与量化
 
-![](images/6b7a78340bb5f9268db4a29c31045a0a8e6cf22dc134b4b7123c136a57d77cca.jpg)
+![](images/649f91aaec91b7827504dcab6886295e097945af671313bedb448e2a71420709.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -133,7 +115,7 @@ Curved gray object with black circular markers at both ends (no text or symbols)
 Original Gray Image
 
 Sampling changes spatial detail; quantization changes gray-level detail  
-![](images/82d34815d3b7db9952f7303885b5c9b8ea53d19cf6769bcd1adfec275c062812.jpg)
+![](images/f468caa90114a73400a96a534bcae091bf0333ca976d81a0e11719e5e2490d7f.jpg)
 
 <details>
 <summary>text_image</summary>
@@ -171,7 +153,7 @@ plt.tight_layout(); plt.show()
 
 ## Banana Through Every Scan
 
-![](images/294cd4a17c5e25fba9c2b4715c415f41d2bf63059c2a3f365fcaf56471258014.jpg)
+![](images/0084893d1ee99ab00a7adacc461ab1686a3ae7741644fb16595f7294cddf69e3.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -181,7 +163,7 @@ Single ripe yellow banana against a plain white background (no text or symbols)
 
 Photo
 
-![](images/37e025f3900c4f0b19216a97df3bd7a556a9a5566522a0285c1ede048090e9f5.jpg)
+![](images/12a0a54843777f5deee3311fd523b1edb3226114f0bf4bfc7ac3fa0c7608c81a.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -191,7 +173,7 @@ Photo
 
 X-RAY
 
-![](images/c5a70cfc751a75b8c969a1bd04d651dcc27e450540b5bad041103ecded1d8830.jpg)
+![](images/d2ffb76e4505b478d1ef5b633d0f1f2b22be2f8dedce35c34288cc3f976714f0.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -201,26 +183,26 @@ Cross-sectional illustration of a banana-shaped object with internal structure (
 
 MRI
 
-![](images/387ce784dc8ca30341925576928dd0936ceeb30fd5ded2da75c3efd39256bba6.jpg)
+![](images/b14927842044c498acd3c82413c993f2f5eb04c9ed16f8d32225c29da28448d3.jpg)
 
 <details>
 <summary>natural_image</summary>
 
-Illustration of a banana with visible stem and leaf (no text or symbols)
+Illustration of a single banana with visible stem and leaf (no text or symbols)
 </details>
 
 CT
 
 ## 树的 CT
 
-![](images/17193f242463e7636a2cb774818113592288e216a3b53c769b263143cca2fda4.jpg)
+![](images/32d2d1ff659393bf85fab5f3c3c19a7c1f8bbc602d63a43d5efdf7f4463bc1fe.jpg)
 
 <details>
 <summary>text_image</summary>
 
 DA-ZHAN BAN
 M.42Y 1995-04-16
-R2025-53
+P002543
 Se: T8
 Sr: 104-87
 Patient Pos: FFS
@@ -306,7 +288,7 @@ Thorax X2, Thorax NC (Adult)
 
 ## 代码演示：CT 投影与重建
 
-![](images/9b51db81caaf4cc3b4107863e728f322fa400f868b24382b7fc5d51909b5552f.jpg)
+![](images/fc1647f319f1db5b58d485d426a35c891288aea9822675b9bb749261f17cb5f6.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -317,7 +299,7 @@ Abstract curved line on black background (no text or symbols)
 Object Structure x
 
 CT: measurement data -> reconstruction algorithm -> slice image  
-![](images/d7876720e329de5ade3e18059111f8e24b7f4e8ea6967636c77b179a38615325.jpg)
+![](images/20ceb51b57329263dc374f3d411833387e8bd48d51105ac56acf836b2a0ea436.jpg)
 
 <details>
 <summary>text_image</summary>
@@ -342,7 +324,7 @@ recon = iradon(y, theta=theta, circle=False, filter_name="ramp")
 fig, ax = plt.subplots(1, 3, figsize=(12, 4))
 for a, i, t in , zip(ax, [x, y, recom], ["x", "projection y", "reconstruction {
 
-    a.imshow(c, cmap="gray"); a.set_title(t); a.axis("off")
+    a.imshow(cmap="gray"); a.set_title(t); a.axis("off")
 plt.tight_layout(); plt.show()
 ```
 
@@ -352,15 +334,17 @@ plt.tight_layout(); plt.show()
 
 真实成像过程往往很复杂。为了让计算机能够处理图像，我们需要把成像过程抽象成可以计算、分析和优化的数学模型。
 
-![](images/5dcb8eaf2253b8f514f61b9bfd757eeb023f348031c1552e11272ac9da067620.jpg)
+![](images/c47774ee024c174e190e3e86e939c809c874372242475950a6412d8754fb4a91.jpg)
 
 <details>
 <summary>flowchart</summary>
 
 ```mermaid
 graph LR
-  A["真实物体"] -->|成像系统| B["观测数据"]
-  C["x"] -->|A| D["y"]
+  A["真实物体"] --> B["成像系统"]
+  B --> C["观测数据"]
+  D["x"] --> E["A"]
+  E --> F["y"]
 ```
 </details>
 
@@ -408,7 +392,7 @@ A: 成像系统或测量过程;
 
 ## 代码演示：统一模型 $y = Ax + n$
 
-![](images/64282557ed5f745ca64c392ef59ac2ebb20569fe38ac9b8c6c8f7723e645da1f.jpg)
+![](images/62c93e311a3a59c3bb87233a88bfeb7bfbaa93a3a190533d0cfd5f4516fc908f.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -419,40 +403,19 @@ Curved gray object with black circular endpoints, no visible text or symbols
 True Image x
 
 Unified imaging model: $y = A x + n$  
-![](images/8e5afd0faf05783c63ac8c4eb1e40891f3c0be86b546f44e0aa2dad38a55a81a.jpg)
+![](images/061e8f459514409e66bab7b1a4dbf799c3455ee434f938071ad4344cfb9a5f14.jpg)
 
 <details>
 <summary>text_image</summary>
 
-X
+x
 true image
 A
-blue system
-</details>
-
-![](images/63c3770d52461da3b5d42c8aad759062dd9904ac14f00f6819d0f03c86c26bb4.jpg)
-
-<details>
-<summary>natural_image</summary>
-
-Two curved, elongated objects with black dots above them, labeled 'A x' in the top-left corner (no other text or symbols)
-</details>
-
-![](images/ea783255214a8b7195adba06df5b47a91c2bc82ef4391055458e5174790d66da.jpg)
-
-<details>
-<summary>text_image</summary>
-
+true system
+Ax
 n
 noise
-</details>
-
-![](images/925f7a24f99b95ba716c29a12e70d1e1b55c589ea42e11ee06f7d76b1886aaa1.jpg)
-
-<details>
-<summary>text_image</summary>
-
-y = A x + n
+y≤Ax≤n
 observed
 </details>
 
@@ -461,7 +424,7 @@ Observed Data y
 ## Python 实现
 
 ```python
-# 用运动模糊模拟 A，用随机流动模拟 n
+# 用运动模糊模拟 A，用随机流动模型 n
 import cv2, numpy as np, matplotlib.pyplot as plt
 x = cv2.imread("images/part1-gray.jpg", 0) / 255.0
 k = np.zeros((17, 17)); k[8, :] = 1; k = k / k.sum()
@@ -548,7 +511,7 @@ $$
 
 ## 代码演示：图像去噪
 
-![](images/59cb43924e82c0b41776c112bcb2d631c30b92f475f4487f35fbbc4302d38135.jpg)
+![](images/96e66fdb6eee2ec599f845d6ae10c15c23d8fc22c97270a631d0d9dc205977c6.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -559,7 +522,7 @@ Simple curved line drawing with two black dots at endpoints (no text or symbols)
 Noisy Observation y
 
 min ||A x - y||^2 + lambda R(x): data fidelity vs prior  
-![](images/72622ec29a813d56748f236691859c1dc12be55eb25babe423efaf64aca09f6e.jpg)
+![](images/16ac8461e1345fe727c2eec2069ad15433d1a80459114829f5025572afc307f0.jpg)
 
 <details>
 <summary>text_image</summary>
@@ -682,7 +645,7 @@ $$
 
 ## 代码演示：三个逆问题对比
 
-![](images/b75281ac523f16576ee1c4f96e1d63774f8791f6262ff5111f6738934b153c4f.jpg)
+![](images/db24a32fa2c21559a371fc880068a2d2ebbe7daeea8cc5f2b6c9cc03758f1dd6.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -693,7 +656,7 @@ Simple curved line drawing with two black dots at endpoints (no text or symbols)
 Low-quality Observation
 
 Inverse problems: recover x from y  
-![](images/821aebb220064869d5214428edf96f5ea7d0332d17854a36718a917bdf8b9d97.jpg)
+![](images/5413bdcd04fefbacdbc6f9d083ed24eefd6977512dded7da86c5ac19ca4f8ec3.jpg)
 
 <details>
 <summary>text_image</summary>
@@ -702,12 +665,12 @@ Target x
 Observatory y
 Functionalizations
 Error observations
-Decoding the target x (with error bars)
+Decoding the target x
 Target x
 Observatory y
 Functionalizations
 Error observations
-Decoding the target x (with error bars)
+Decoding the target x
 Target x
 Observatory y
 Functionalizations
@@ -970,7 +933,7 @@ $$
 
 ## 代码演示：线性变换
 
-![](images/9229f042e6abd495f0f5d35923a84382fadd1ed2155c0899680c3b58f0beabf9.jpg)
+![](images/ef18131b0ca51f308fb9318bc960bc639b2825d531f164485379c7c1f150071b.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -980,7 +943,7 @@ Portrait of a woman wearing a wide-brimmed hat with feather decoration (no visib
 
 Original
 
-![](images/7fca0e2f594e652cbc5f4d2ea496b6d63fec042abcfd96beeafbeb28b3ded1c9.jpg)
+![](images/d65dfad614037d102dfb396b09f9a89958b139669523fdccc935eaf36343efb5.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -1008,7 +971,7 @@ plt.tight_layout(); plt.show()
 
 ## 代码演示：非线性变换
 
-![](images/821c062c0b46d7a04d96ef03b60ec93236dd7efb66d71cac94feaabde07fcf30.jpg)
+![](images/134a368572a49e973d4bd03590cbf48a080fd3d47f1cf9304b88bbfd822ea69e.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -1018,12 +981,12 @@ Portrait of a woman wearing a wide-brimmed hat with feather decoration (no visib
 
 Original
 
-![](images/7ce1c7130ae04edef4711b58365dcc45bbd377e493c99569420a1a92357d1c0a.jpg)
+![](images/e0cec0ffe6a59ee168b754a6bc62d2e090f4b9c83556230b10fe35a9ee5b0a8f.jpg)
 
 <details>
 <summary>natural_image</summary>
 
-Three portrait photos of a woman wearing a hat, labeled Original, Gamma 0.5 (brightest), and Gamma 3.5 (deeply) — all without any text or symbols on the images themselves.
+Three portrait photos of a woman wearing a hat, showing different lighting conditions (Original, Gamma 0.5, Gamma 1.5) with no visible text or symbols.
 </details>
 
 Processed Result
@@ -1031,7 +994,7 @@ Processed Result
 ## Python 实现
 
 ```python
-# 非线性映射 s = c * r^gamma, gamma<1 提亮暗部，gamma>1 压缩暗部
+# 非线性映射 s = c * r^gamma, gamma<1 提亮暗部, gamma>1 压缩暗部
 import cv2, matplotlib.pyplot as plt, numpy as np
 bgr = cv2.imread("lena_color_512.png"); rgb = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB)
 g06 = np.clip((rgb/255)**0.6*255, 0, 255).astype("uint8")
@@ -1334,7 +1297,7 @@ $$
 
 ## 边缘检测例子
 
-![](images/5f322b668b8af939ca147d9c0a0780f1b649b83e1f96b82cc38efbbe7724d60c.jpg)
+![](images/2f7fdc104783638519f30fb82bdcbde14f06818399bbcb4a4033de76ade2e06c.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -1344,7 +1307,7 @@ Glass table with wine bottle and glass, no visible text or symbols on the main s
 
 原图
 
-![](images/854454c33f19cfbc0e2aa2cd78c212fbbd1fc149f3142f903574e18210b4d74b.jpg)
+![](images/b3a3ca785f9c2f6a0a1ed801e25e0951ff41a7c172048722fb44b0b858fde14b.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -1407,7 +1370,7 @@ $$
 
 ## 锐化例子
 
-![](images/7a2b23a5d349af3ab3e7b27ac0b9ef4827ec04fa6114799bbdd5ce04f7e1bc24.jpg)
+![](images/77daeb628559273cdd65bcd8ba1874cc0cea72ec9296c0b7dd4d3354f3780848.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -1417,7 +1380,7 @@ Glass table with wine bottle and glass, reflecting dark liquid (no visible text 
 
 原图
 
-![](images/3ed2d4c26c4e08b943cee3f163b3c22e10256534cb1e4c38bd7514bf05b0ed7f.jpg)
+![](images/738ff9dc5d97fe50ee5679da7a7c2b3d9f1e742b61e7fbb2da79e1d451140bc7.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -1429,7 +1392,7 @@ $$
 \left[ \begin{array}{c c c} 0 & - 1 & 0 \\ - 1 & 4 & - 1 \\ 0 & - 1 & 0 \end{array} \right]
 $$
 
-![](images/12baab9d9b451c911cc09d560d10b1b3cf7c736d1cf09d0220df69a364ed5f48.jpg)
+![](images/95ac4fc07feeab3d6ada787bedf29cab351628d5629ff1fa455827d8de53b720.jpg)
 
 <details>
 <summary>natural_image</summary>
@@ -1478,6 +1441,47 @@ $$
 ## 一句话
 
 边缘检测不是最终目的，而是许多图像分析任务的基础步骤。
+
+## Vibe Coding
+
+vs code + continue + ollama(本地模型)/API(deepseek 等)
+
+![](images/969c19cfe835ecf4023889c6c750dcdf0523918226f1758a4db5e2faf453189c.jpg)
+
+<details>
+<summary>text_image</summary>
+
+基于python的PIL库，利用sobel算子完成边缘检测
+Thought
+我来帮你使用Python的PIL库和Sobel算子实现边缘检测。下面是一个完整的实现：
+Python
+import numpy as np
+from PIL import Image
+import matplotlib.pyplot as plt
+def sobel_edge_detection(image_path, output_path=None, threshold=50):
+    --- 
+    使用Sobel算子进行边缘检测
+    Args:
+    image_path: 输入图像路径
+    output_path: 地面图像路径（可选）
+    threshold: 边缘检测阈值，用于二倍化
+    Returns:
+    edges: 边缘检测结果
+    --- 
+# 1. 读取图像并转换为灰度图
+try:
+img = image.open(image_path)
+if img_mode != 't': # 如果不是灰度图，则转换
+    img = img.convert('t')
+代码说明
+1. 核心算法实现
+• Sobel算子定义：分别定义了水平方向(sobel_x)和垂直方向(sobel_y)的Sobel算子
+• 砌积操作：对每个像素应用x3的Sobel算子
+• 梯度计算：分别计算和y方向的梯度，然后计算梯度幅值
+2. 两种实现方式
+1. 基本实现：手动实现卷积运算，更清晰地展示算法原理
+2. 优化实现：使用PIL内置的Kernel滤波器，效率更高
+</details>
 
 ## 第三部分阶段小结
 
@@ -1745,7 +1749,7 @@ $$
 ## 图像分割的例子
 
 图像分割·课堂互动演示  
-![](images/7c3fa9a3bee4b531137065bb7e6bab29a400ba9cddb3a0d17489ded7a078b013.jpg)
+![](images/352dd94c3be9899ae608313448a7fe51b1f2ddbd7e0155c6265aff7f28670973.jpg)
 
 <details>
 <summary>text_image</summary>
@@ -1753,24 +1757,25 @@ $$
 阈值参数
 区域发生
 无源的影响
-M/σI 精什么
-工作时的缩放
-阈值 T 128
-阈值范围：0.0000
-阈值范围：0.0000
-阈值范围：0.0000
-阈值范围：0.0000
-阈值范围：0.0000
-阈值范围：0.0000
-阈值范围：0.0000
-阈值范围：0.0000
-阈值范围：0.0000
-阈值范围：0.0000
+x1/2 算什么
+工作时的预览
+阈值 108
+数据透视表，左视图、右视图及右视图显示
+特征提取（无误差）
+特征提取（无误差）：
+特征提取（无误差）：
+特征提取（无误差）
+9622
+90378
+24.1%
+特征提取率：标准差 +1 - 百分值（如：保留差 +1 - 递减（保留差）；
+试运行时需调整到实际值，使系统发生时点一至零，等待运行时点二至零，时间长等于。
+- 试运行时需调整到实际值，使系统发生时点一至零，等待运行时点二至零，时间长等于。
 </details>
 
-![](images/eee9f46f5be16ed4bf510e00759af0436eb50bca8c4db086910fa7e08a875f39.jpg)
+![](images/cc36558ad3bb6ec5c0ac9f61fbc996640110a7f01577c0a37679f667d4685049.jpg)
 
-![](images/7b0bb7eab1071798cfb55ae16abdbaca5bb41875231ffb7803741ec27e58c8e2.jpg)  
+![](images/e2a41e8ed3f09c074fa75c75bd7726fbbd4d80c2abe93ab4407772fe914ee061.jpg)  
 图: 点击图片进入网页端交互演示
 
 ## 图像分割的应用
@@ -1793,7 +1798,7 @@ M/σI 精什么
 ② 阈值分割适合目标与背景差异明显的场景。  
 ③ 区域生长从种子点出发，逐步合并相似像素。  
 4 边缘方法关注“边界在哪里”。  
-⑤ 区域方法关注 “哪些像素属于一起”。  
+⑤ 区域方法关注 “哪些像素属于自己”。  
 ⑥ 语义分割进一步要求判断每个像素的类别。  
 ⑦ 深度学习方法可以结合局部特征与上下文语义。
 
@@ -2119,7 +2124,7 @@ class TinySegNet(nn.Module):
     self.dec1 = nn.Conv2d(32, 16, 3, padding=1)
     self.out = nn.Conv2d(16, 1, 1)
 
-def forward(self, x):
+    def forward(self, x):
     x = F.relu(self.enc1(x))
     x = F.max_pool2d(x, 2)
     x = F.relu(self.enc2(x))

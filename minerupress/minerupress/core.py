@@ -672,12 +672,14 @@ def export(config: BookConfig, plugins: Sequence[ExportPlugin] = ()) -> None:
             chapter_items = list(_iter_chapter_items(segments, start, end))
 
             lines: list[str] = [f"# {ch.title}", ""]
-            # Track first heading per page: only the first heading on each
-            # PDF page becomes `##`; subsequent headings on the same page
-            # are demoted to plain text.
+            # Heading hierarchy: first page uses "核心问题" as parent `##`;
+            # non-first pages use the first heading as `##`; all subsequent
+            # headings on the same page become `###`.  Code-demo pages are
+            # demoted to `###` (children of the preceding section heading).
             seen_chapter_title = True  # line[0] is already the chapter title
             last_page_idx: int | None = None
             first_on_page = True
+            found_core_question = False
             for item_idx, item, segment in chapter_items:
                 image_out_name = image_decisions.get((segment.path, item_idx))
                 md = _item_to_md(
@@ -694,17 +696,25 @@ def export(config: BookConfig, plugins: Sequence[ExportPlugin] = ()) -> None:
                         if pg is not None and pg != last_page_idx:
                             last_page_idx = pg
                             first_on_page = True
-                        if first_on_page:
-                            # First heading on this page → ##
-                            stripped = md.lstrip()
-                            indent = md[:len(md) - len(stripped)]
-                            md = f"{indent}## {stripped[2:]}"
+                        stripped = md.lstrip()
+                        indent = md[:len(md) - len(stripped)]
+                        heading_text = stripped[2:].strip()
+
+                        if not found_core_question:
+                            # First content page: 核心问题 is the parent heading
+                            if heading_text == "核心问题":
+                                found_core_question = True
+                                md = f"{indent}## {heading_text}"
+                            else:
+                                md = f"{indent}### {heading_text}"
+                            first_on_page = False
+                        elif first_on_page and "代码演示" not in heading_text:
+                            # Non-code-demo page: first heading is parent
+                            md = f"{indent}## {heading_text}"
                             first_on_page = False
                         else:
-                            # Subsequent headings on same page → plain text
-                            stripped = md.lstrip()
-                            indent = md[:len(md) - len(stripped)]
-                            md = f"{indent}{stripped[2:]}"
+                            # Code demo page or subsequent heading → child
+                            md = f"{indent}### {heading_text}"
                     lines.append(md)
                     lines.append("")
 

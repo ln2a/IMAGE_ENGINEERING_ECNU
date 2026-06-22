@@ -73,9 +73,9 @@ plt.show()
 print(feature)
 ```
 
-完整代码、数据生成函数和可视化均包含在实验 1 中。
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex11_ch05.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
 
-<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex11_ch05.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin: 4px 0 12px;">运行实验 1：特征与分类 →</a>
+完整代码、数据生成函数和可视化均包含在实验 1 中。
 
 ## 2. 从特征到图像分类
 
@@ -114,6 +114,8 @@ model.fit(train_features, train_labels)
 prediction = model.predict(test_features)
 accuracy = (prediction == test_labels).mean()
 ```
+
+<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex12_ch05.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin-top: 4px; margin-bottom: 8px;">运行此代码 →</a>
 
 ### 2.3 分类结果
 
@@ -158,8 +160,6 @@ for box in boxes:
 
 场景中包含多个目标。程序会精确定位每个独立连通区域，并在图像上画出预测框。
 同时保留前景掩膜，因此这个实验也展示了像素级分割结果。
-
-<a href="https://mybinder.org/v2/gh/ln2a/IMAGE_ENGINEERING_ECNU/main?urlpath=%2Fdoc%2Ftree%2Fpython-tutorial%2Fex12_ch05.ipynb" target="_blank" style="display: inline-block; background-color: #03a9f4; color: white; padding: 10px 24px; border-radius: 6px; text-decoration: none; font-size: 15px; margin: 4px 0 12px;">运行实验 2：多目标检测与画框 →</a>
 
 ### 3.3 为什么这个检测器效果好？
 
