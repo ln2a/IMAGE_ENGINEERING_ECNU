@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图像分割 · 课堂演示</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, "Segoe UI", sans-serif;
+  background: #f0f4f8;
+  color: #222;
+  min-height: 100vh;
+  padding: 24px 16px;
+}
+
+.container { max-width: 960px; margin: 0 auto; }
+
+.page-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0d1b2a;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  background: #fff;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 14px 10px;
+  border: none;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #888;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+}
+.tab-btn:hover { background: #f5f8ff; color: #444; }
+.tab-btn.active { color: #0077a8; border-bottom-color: #00b4d8; background: #f0faff; }
+
+.tab-content {
+  background: #fff;
+  border-radius: 0 0 10px 10px;
+  padding: 28px 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  display: none;
+  min-height: 420px;
+}
+.tab-content.active { display: block; }
+
+/* ── Shared layout ── */
+.demo-row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin: 18px 0;
+}
+
+.canvas-box { text-align: center; }
+.canvas-label {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+canvas { border-radius: 6px; border: 1px solid #ddd; display: block; }
+
+.control-bar {
+  background: #f5f8fc;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.control-bar label { font-size: 14px; font-weight: 600; white-space: nowrap; }
+input[type="range"] { width: 200px; cursor: pointer; accent-color: #00b4d8; }
+
+.explain-box {
+  background: #e8f4fd;
+  border-left: 4px solid #00b4d8;
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #1a3a50;
+  margin-top: 14px;
+}
+.explain-box strong { color: #006a8a; }
+
+.stat-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.stat-card {
+  background: #f0f4f8;
+  border-radius: 8px;
+  padding: 10px 18px;
+  min-width: 120px;
+  text-align: center;
+}
+.stat-card .s-label { font-size: 12px; color: #888; margin-bottom: 2px; }
+.stat-card .s-val { font-size: 22px; font-weight: 700; color: #0077a8; }
+
+/* Buttons */
+.btn {
+  padding: 10px 22px;
+  border: none;
+  border-radius: 6px;
+  background: #00b4d8;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn:hover { background: #0099bb; }
+.btn:disabled { background: #bbb; cursor: not-allowed; }
+.btn-grey { background: #95a5a6; }
+.btn-grey:hover { background: #7f8c8d; }
+
+/* ── Tab 2 region grow ── */
+.grid-layout { display: flex; gap: 28px; justify-content: center; align-items: flex-start; flex-wrap: wrap; }
+.grid-info {
+  background: #f5f8fc;
+  border-radius: 8px;
+  padding: 16px;
+  min-width: 220px;
+}
+.info-row { display: flex; justify-content: space-between; gap: 20px; font-size: 14px; padding: 5px 0; border-bottom: 1px solid #eee; }
+.info-row:last-child { border-bottom: none; }
+.info-row .k { color: #666; }
+.info-row .v { font-weight: 700; color: #0077a8; }
+
+/* ── Tab 3 lighting ── */
+.lighting-compare { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+.lighting-panel { text-align: center; }
+.lighting-panel .panel-title {
+  font-size: 14px; font-weight: 700; margin-bottom: 8px;
+  padding: 5px 12px; border-radius: 20px; display: inline-block;
+}
+.bad-title { background: #fde8e8; color: #c0392b; }
+.good-title { background: #e8fde8; color: #1a7a1a; }
+
+/* ── Tab 4 IoU ── */
+.iou-layout { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.iou-hint {
+  background: #fffbe6;
+  border: 1px solid #f0c040;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #7a5c00;
+}
+.iou-stats {
+  display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+}
+.iou-stat {
+  background: #f5f8fc; border-radius: 8px; padding: 12px 20px; text-align: center; min-width: 120px;
+}
+.iou-stat .s-label { font-size: 12px; color: #888; margin-bottom: 3px; }
+.iou-stat .s-val { font-size: 26px; font-weight: 700; color: #0077a8; }
+.iou-stat.highlight .s-val { font-size: 30px; }
+.iou-stat.good .s-val { color: #27ae60; }
+.iou-stat.bad .s-val { color: #e74c3c; }
+
+/* ── Tab 5 type compare ── */
+.type-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+.type-btn {
+  padding: 10px 24px; border: 2px solid #ccc; border-radius: 6px;
+  background: #fff; font-size: 14px; font-weight: 600; color: #666;
+  cursor: pointer; transition: all 0.2s;
+}
+.type-btn.active { background: #00b4d8; border-color: #00b4d8; color: #fff; }
+.type-desc {
+  text-align: center; font-size: 15px; font-weight: 600; color: #1a3a50;
+  min-height: 28px; margin-bottom: 10px;
+}
+.type-explain {
+  text-align: center; font-size: 13px; color: #666; min-height: 20px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="page-title">🖼️ 图像分割 · 课堂互动演示</div>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="t1">① 阈值分割</button>
+    <button class="tab-btn" data-tab="t2">② 区域生长</button>
+    <button class="tab-btn" data-tab="t3">③ 光照的影响</button>
+    <button class="tab-btn" data-tab="t4">④ IoU 是什么</button>
+    <button class="tab-btn" data-tab="t5">⑤ 三种分割对比</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       TAB 1: 阈值分割
+  ═══════════════════════════════════════════════ -->
+  <div class="tab-content active" id="t1">
+    <div class="control-bar">
+      <label>阈值 T &nbsp;<strong id="t1-val">128</strong></label>
+      <input type="range" id="t1-slider" min="0" max="255" value="128">
+      <span style="font-size:13px;color:#888;">← 拖动滑块，左右移动，观察分割结果变化</span>
+    </div>
+
+    <div class="demo-row">
+      <div class="canvas-box">
+        <canvas id="t1-orig" width="200" height="200"></canvas>
+        <div class="canvas-label">原始图像（灰度）</div>
+      </div>
+      <div class="canvas-box" style="display:flex;align-items:center;font-size:36px;color:#ccc;padding-top:80px;">→</div>
+      <div class="canvas-box">
+        <canvas id="t1-seg" width="200" height="200"></canvas>
+        <div class="canvas-label">分割结果（白=目标 / 黑=背景）</div>
+      </div>
+      <div class="canvas-box">
+        <canvas id="t1-hist" width="220" height="200"></canvas>
+        <div class="canvas-label">灰度直方图（红线 = 当前阈值）</div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="s-label">目标像素数</div><div class="s-val" id="t1-target">0</div></div>
+      <div class="stat-card"><div class="s-label">背景像素数</div><div class="s-val" id="t1-bg">0</div></div>
+      <div class="stat-card"><div class="s-label">目标占比</div><div class="s-val" id="t1-ratio">0%</div></div>
+    </div>
+
+    <div class="explain-box">
+      规则很简单：<strong>灰度值 &gt; T → 白色（目标）</strong>，<strong>灰度值 ≤ T → 黑色（背景）</strong>。<br>
+      试试把 T 拖到很低或很高，看看会发生什么——太低，背景也变白了；太高，目标消失了。
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       TAB 2: 区域生长
+  ═══════════════════════════════════════════════ -->
+  <div class="tab-content" id="t2">
+    <div class="control-bar">
+      <label>相似度阈值 δ &nbsp;<strong id="t2-delta">30</strong></label>
+      <input type="range" id="t2-slider" min="5" max="80" value="30">
+      <span style="font-size:13px;color:#888;">δ 越大，"相似"的范围越宽，区域越大</span>
+    </div>
+
+    <div class="grid-layout">
+      <div class="canvas-box">
+        <canvas id="t2-grid" width="300" height="300"></canvas>
+        <div class="canvas-label">点击图中任意位置 → 设为种子点 → 点"开始生长"</div>
+      </div>
+
+      <div class="grid-info">
+        <div class="info-row"><span class="k">种子点位置</span><span class="v" id="t2-pos">未选</span></div>
+        <div class="info-row"><span class="k">种子点灰度值</span><span class="v" id="t2-gray">—</span></div>
+        <div class="info-row"><span class="k">已加入区域</span><span class="v" id="t2-count">0 像素</span></div>
+        <div class="info-row"><span class="k">状态</span><span class="v" id="t2-status">等待种子点</span></div>
+
+        <div style="margin-top:16px;display:flex;gap:10px;">
+          <button class="btn" id="t2-start" disabled>▶ 开始生长</button>
+          <button class="btn btn-grey" id="t2-reset">↺ 重置</button>
+        </div>
+
+        <div class="explain-box" style="margin-top:16px;">
+          <strong>思路：</strong> 从种子点出发，检查周围像素——如果灰度差 ≤ δ，就把它"拉进"同一个区域，不断重复，直到没有新的像素符合条件。<br><br>
+          <strong>试试：</strong> 点亮色区域 vs 暗色区域，看看生长出的范围有多不同。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       TAB 3: 光照的影响
+  ═══════════════════════════════════════════════ -->
+  <div class="tab-content" id="t3">
+    <div class="control-bar">
+      <label>全局阈值 T &nbsp;<strong id="t3-val">128</strong></label>
+      <input type="range" id="t3-slider" min="0" max="255" value="128">
+      <span style="font-size:13px;color:#888;">调整阈值，观察左图效果</span>
+    </div>
+
+    <div class="lighting-compare">
+      <div class="lighting-panel">
+        <div class="panel-title bad-title">❌ 全局阈值（同一个 T 用到整张图）</div>
+        <canvas id="t3-global" width="280" height="200"></canvas>
+        <div class="canvas-label">左暗右亮时，一个阈值两头都不对</div>
+      </div>
+      <div class="lighting-panel">
+        <div class="panel-title good-title">✅ 自适应阈值（每块区域单独算）</div>
+        <canvas id="t3-adaptive" width="280" height="200"></canvas>
+        <div class="canvas-label">每个小区域用自己的局部亮度来判断</div>
+      </div>
+    </div>
+
+    <div class="explain-box">
+      这张图左边很暗、右边很亮（模拟真实场景中的<strong>光照不均</strong>）。<br>
+      图中有两个灰色圆形目标，理论上都应该被分割出来。<br><br>
+      ← 拖动左边的滑块：当 T 适合右边时，左边目标消失了；当 T 适合左边时，右边背景全变成目标了。<br>
+      <strong>自适应阈值</strong>就是解决这个问题的方法——它不用一个固定值，而是根据每个像素的"周围邻居"来判断。
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       TAB 4: IoU
+  ═══════════════════════════════════════════════ -->
+  <div class="tab-content" id="t4">
+    <div class="iou-layout">
+      <div class="iou-hint">
+        💡 用鼠标<strong>拖动</strong>蓝色框（预测结果）或橙色框（正确答案），看 IoU 如何变化
+      </div>
+
+      <canvas id="t4-canvas" width="580" height="260" style="cursor:default;"></canvas>
+
+      <div class="iou-stats">
+        <div class="iou-stat"><div class="s-label">交集（重叠部分）</div><div class="s-val" id="t4-inter">0</div></div>
+        <div class="iou-stat"><div class="s-label">并集（总覆盖）</div><div class="s-val" id="t4-union">0</div></div>
+        <div class="iou-stat highlight" id="t4-iou-card">
+          <div class="s-label">IoU 得分</div>
+          <div class="s-val" id="t4-iou">0.00</div>
+        </div>
+        <div class="iou-stat"><div class="s-label">评级</div><div class="s-val" id="t4-grade">—</div></div>
+      </div>
+
+      <div class="explain-box" style="max-width:580px;">
+        <strong>IoU = 交集面积 ÷ 并集面积</strong>，结果在 0～1 之间。<br>
+        两个框完全重合 → IoU = 1.0（满分）；完全不重叠 → IoU = 0。<br>
+        通常 <strong>IoU &gt; 0.5</strong> 就认为这次分割是对的。
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       TAB 5: 三种分割对比
+  ═══════════════════════════════════════════════ -->
+  <div class="tab-content" id="t5">
+    <div class="type-btns">
+      <button class="type-btn active" data-type="original">原始图像</button>
+      <button class="type-btn" data-type="semantic">语义分割</button>
+      <button class="type-btn" data-type="instance">实例分割</button>
+    </div>
+
+    <div class="type-desc" id="t5-desc">原始图像</div>
+    <div class="type-explain" id="t5-explain">点击上方按钮，看同一张图经过不同分割后是什么样子</div>
+
+    <div style="text-align:center;margin:14px 0;">
+      <canvas id="t5-canvas" width="600" height="260"></canvas>
+    </div>
+
+    <div class="explain-box">
+      <strong>语义分割：</strong>告诉你每个像素"是什么"——所有人都是同一种颜色（person）。<br>
+      <strong>实例分割：</strong>不仅告诉你"是什么"，还区分"是哪一个"——人₁、人₂、人₃各自不同颜色。<br>
+      <strong>一句话区别：</strong>语义分割认出"种类"，实例分割认出"个体"。
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// TAB SWITCHING
+// ═══════════════════════════════════════════
+function switchTab(tabId) {
+  const valid = ['t1','t2','t3','t4','t5'];
+  if (!valid.includes(tabId)) tabId = 't1';
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  const btn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+  if (btn) btn.classList.add('active');
+  const content = document.getElementById(tabId);
+  if (content) content.classList.add('active');
+  if (tabId==='t1'&&!t1Init) initT1();
+  if (tabId==='t2'&&!t2Init) initT2();
+  if (tabId==='t3'&&!t3Init) initT3();
+  if (tabId==='t4'&&!t4Init) initT4();
+  if (tabId==='t5'&&!t5Init) initT5();
+  try { history.replaceState(null,'','#'+tabId); } catch(e) {}
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
+
+// ═══════════════════════════════════════════
+// TAB 1: 阈值分割
+// ═══════════════════════════════════════════
+let t1Init = false, t1ImageData = null, t1Hist = new Array(256).fill(0);
+
+function initT1() {
+  t1Init = true;
+  const canvas = document.getElementById('t1-orig');
+  const ctx = canvas.getContext('2d');
+  const imgData = ctx.createImageData(200, 200);
+
+  // Generate: dark background, bright circle center, medium rect bottom-left
+  for (let y = 0; y < 200; y++) {
+    for (let x = 0; x < 200; x++) {
+      const idx = (y * 200 + x) * 4;
+      const d = Math.sqrt((x-100)**2 + (y-100)**2);
+      let g = 50; // background ~50
+      if (d < 55) g = 180; // bright circle
+      if (x > 15 && x < 60 && y > 135 && y < 175) g = 120; // medium rect
+      g = Math.max(0, Math.min(255, g + Math.floor(Math.random()*21)-10));
+      imgData.data[idx] = imgData.data[idx+1] = imgData.data[idx+2] = g;
+      imgData.data[idx+3] = 255;
+      t1Hist[g]++;
+    }
+  }
+  ctx.putImageData(imgData, 0, 0);
+  t1ImageData = imgData;
+
+  const slider = document.getElementById('t1-slider');
+  slider.addEventListener('input', e => {
+    document.getElementById('t1-val').textContent = e.target.value;
+    updateT1(+e.target.value);
+  });
+  updateT1(128);
+}
+
+function updateT1(T) {
+  const sc = document.getElementById('t1-seg').getContext('2d');
+  const out = sc.createImageData(200, 200);
+  let fg = 0, bg = 0;
+  for (let i = 0; i < t1ImageData.data.length; i += 4) {
+    const g = t1ImageData.data[i];
+    const v = g > T ? 255 : 0;
+    out.data[i] = out.data[i+1] = out.data[i+2] = v;
+    out.data[i+3] = 255;
+    if (v === 255) fg++; else bg++;
+  }
+  sc.putImageData(out, 0, 0);
+  document.getElementById('t1-target').textContent = fg;
+  document.getElementById('t1-bg').textContent = bg;
+  document.getElementById('t1-ratio').textContent = ((fg/40000)*100).toFixed(1)+'%';
+  drawT1Hist(T);
+}
+
+function drawT1Hist(T) {
+  const hc = document.getElementById('t1-hist').getContext('2d');
+  hc.fillStyle = '#fff'; hc.fillRect(0,0,220,200);
+  const max = Math.max(...t1Hist);
+  const bw = 220/256;
+  for (let i = 0; i < 256; i++) {
+    const bh = (t1Hist[i]/max)*175;
+    hc.fillStyle = i <= T ? '#aac4d4' : '#00b4d8';
+    hc.fillRect(i*bw, 200-bh-10, bw, bh);
+  }
+  hc.strokeStyle = '#e74c3c'; hc.lineWidth = 2;
+  hc.beginPath(); hc.moveTo(T*bw, 0); hc.lineTo(T*bw, 200); hc.stroke();
+  hc.fillStyle = '#e74c3c'; hc.font = 'bold 11px sans-serif';
+  hc.fillText('T='+T, Math.min(T*bw+3, 170), 14);
+}
+
+// ═══════════════════════════════════════════
+// TAB 2: 区域生长
+// ═══════════════════════════════════════════
+let t2Init = false;
+let t2Grid = [], t2Seed = null, t2Region = new Set();
+let t2Growing = false, t2Timer = null;
+const GRID = 20, CELL = 15;
+
+function initT2() {
+  t2Init = true;
+  makeGrid();
+  drawGrid();
+
+  document.getElementById('t2-grid').addEventListener('click', onGridClick);
+  document.getElementById('t2-slider').addEventListener('input', e => {
+    document.getElementById('t2-delta').textContent = e.target.value;
+  });
+  document.getElementById('t2-start').addEventListener('click', startGrow);
+  document.getElementById('t2-reset').addEventListener('click', resetGrow);
+}
+
+function makeGrid() {
+  t2Grid = [];
+  for (let y = 0; y < GRID; y++) {
+    t2Grid[y] = [];
+    for (let x = 0; x < GRID; x++) {
+      const d = Math.sqrt((x-9.5)**2 + (y-9.5)**2);
+      let g = d < 3 ? 190 : d < 6 ? 145 : d < 9 ? 100 : 55;
+      g = Math.max(0, Math.min(255, g + Math.floor(Math.random()*21)-10));
+      t2Grid[y][x] = { g, in: false };
+    }
+  }
+}
+
+function drawGrid() {
+  const ctx = document.getElementById('t2-grid').getContext('2d');
+  ctx.fillStyle = '#eee'; ctx.fillRect(0,0,300,300);
+  for (let y = 0; y < GRID; y++) for (let x = 0; x < GRID; x++) {
+    const c = t2Grid[y][x];
+    ctx.fillStyle = c.in ? '#00b4d8' : `rgb(${c.g},${c.g},${c.g})`;
+    ctx.fillRect(x*CELL+1, y*CELL+1, CELL-1, CELL-1);
+  }
+  if (t2Seed) {
+    ctx.fillStyle = '#e74c3c';
+    ctx.beginPath();
+    ctx.arc(t2Seed.x*CELL+CELL/2+1, t2Seed.y*CELL+CELL/2+1, 5, 0, Math.PI*2);
+    ctx.fill();
+  }
+}
+
+function onGridClick(e) {
+  if (t2Growing) return;
+  const r = e.target.getBoundingClientRect();
+  const gx = Math.floor((e.clientX - r.left) / CELL);
+  const gy = Math.floor((e.clientY - r.top) / CELL);
+  if (gx < 0 || gx >= GRID || gy < 0 || gy >= GRID) return;
+  t2Seed = { x: gx, y: gy };
+  t2Region.clear();
+  for (const row of t2Grid) for (const c of row) c.in = false;
+  document.getElementById('t2-pos').textContent = `(${gx}, ${gy})`;
+  document.getElementById('t2-gray').textContent = t2Grid[gy][gx].g;
+  document.getElementById('t2-count').textContent = '0 像素';
+  document.getElementById('t2-status').textContent = '已选，点"开始生长"';
+  document.getElementById('t2-start').disabled = false;
+  drawGrid();
+}
+
+function startGrow() {
+  if (!t2Seed || t2Growing) return;
+  t2Growing = true;
+  document.getElementById('t2-start').disabled = true;
+  document.getElementById('t2-status').textContent = '生长中…';
+  const delta = +document.getElementById('t2-slider').value;
+  const seedG = t2Grid[t2Seed.y][t2Seed.x].g;
+  const queue = [{ x: t2Seed.x, y: t2Seed.y }];
+  t2Grid[t2Seed.y][t2Seed.x].in = true;
+  t2Region.add(`${t2Seed.x},${t2Seed.y}`);
+
+  function step() {
+    if (!queue.length) {
+      t2Growing = false;
+      document.getElementById('t2-start').disabled = false;
+      document.getElementById('t2-status').textContent = '✅ 生长完成';
+      return;
+    }
+    for (let i = 0; i < 6 && queue.length; i++) {
+      const { x, y } = queue.shift();
+      for (const [dx,dy] of [[-1,0],[1,0],[0,-1],[0,1]]) {
+        const nx=x+dx, ny=y+dy;
+        if (nx<0||nx>=GRID||ny<0||ny>=GRID) continue;
+        const key = `${nx},${ny}`;
+        if (t2Region.has(key)) continue;
+        if (Math.abs(t2Grid[ny][nx].g - seedG) <= delta) {
+          t2Grid[ny][nx].in = true;
+          t2Region.add(key);
+          queue.push({ x: nx, y: ny });
+        }
+      }
+    }
+    document.getElementById('t2-count').textContent = t2Region.size + ' 像素';
+    drawGrid();
+    t2Timer = setTimeout(step, 50);
+  }
+  step();
+}
+
+function resetGrow() {
+  if (t2Timer) clearTimeout(t2Timer);
+  t2Growing = false;
+  t2Seed = null;
+  t2Region.clear();
+  makeGrid();
+  drawGrid();
+  document.getElementById('t2-pos').textContent = '未选';
+  document.getElementById('t2-gray').textContent = '—';
+  document.getElementById('t2-count').textContent = '0 像素';
+  document.getElementById('t2-status').textContent = '等待种子点';
+  document.getElementById('t2-start').disabled = true;
+}
+
+// ═══════════════════════════════════════════
+// TAB 3: 光照不均
+// ═══════════════════════════════════════════
+let t3Init = false, t3OrigData = null, t3AdaptData = null;
+const T3W = 280, T3H = 200;
+
+function initT3() {
+  t3Init = true;
+
+  // Build source: gradient lighting + two circles
+  const src = new Float32Array(T3W * T3H); // true grayscale values
+  for (let y = 0; y < T3H; y++) {
+    for (let x = 0; x < T3W; x++) {
+      // background: gradient from dark (left) to bright (right)
+      let base = 30 + (x / T3W) * 120;
+      // circle 1: left side, center (70,100)
+      const d1 = Math.sqrt((x-70)**2 + (y-100)**2);
+      // circle 2: right side, center (210,100)
+      const d2 = Math.sqrt((x-210)**2 + (y-100)**2);
+      let extra = 0;
+      if (d1 < 38) extra = 60;  // target brighter than local background
+      if (d2 < 38) extra = 60;
+      const noise = (Math.random()-0.5) * 10;
+      src[y*T3W+x] = Math.max(0, Math.min(255, base + extra + noise));
+    }
+  }
+
+  // Adaptive result: precompute using Summed Area Table (O(n), not O(n*k²))
+  const adaptResult = computeAdaptive(src, T3W, T3H, 28, 8);
+  t3AdaptData = adaptResult;
+  t3OrigData = src;
+
+  drawAdaptive();
+
+  document.getElementById('t3-slider').addEventListener('input', e => {
+    document.getElementById('t3-val').textContent = e.target.value;
+    drawGlobal(+e.target.value);
+  });
+  drawGlobal(128);
+}
+
+// Fast adaptive threshold using Summed Area Table — O(n) per pixel instead of O(n*k²)
+function computeAdaptive(src, W, H, blockSize, C) {
+  // Step 1: build integral image (sat[y][x] = sum of src[0..y][0..x])
+  const sat = new Float64Array((W+1) * (H+1)); // 1-pixel border of zeros
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      sat[(y+1)*(W+1)+(x+1)] = src[y*W+x]
+        + sat[y*(W+1)+(x+1)]
+        + sat[(y+1)*(W+1)+x]
+        - sat[y*(W+1)+x];
+    }
+  }
+  // Step 2: for each pixel, query local mean in O(1) using SAT
+  const result = new Uint8Array(W * H);
+  const half = Math.floor(blockSize / 2);
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const x1 = Math.max(0, x - half),     y1 = Math.max(0, y - half);
+      const x2 = Math.min(W-1, x + half),   y2 = Math.min(H-1, y + half);
+      const area = (x2-x1+1) * (y2-y1+1);
+      const sum  = sat[(y2+1)*(W+1)+(x2+1)]
+                 - sat[y1*(W+1)+(x2+1)]
+                 - sat[(y2+1)*(W+1)+x1]
+                 + sat[y1*(W+1)+x1];
+      result[y*W+x] = src[y*W+x] > (sum/area - C) ? 255 : 0;
+    }
+  }
+  return result;
+}
+
+function drawGlobal(T) {
+  const ctx = document.getElementById('t3-global').getContext('2d');
+  const out = ctx.createImageData(T3W, T3H);
+  for (let i = 0; i < T3W*T3H; i++) {
+    const v = t3OrigData[i] > T ? 255 : 0;
+    out.data[i*4] = out.data[i*4+1] = out.data[i*4+2] = v;
+    out.data[i*4+3] = 255;
+  }
+  ctx.putImageData(out, 0, 0);
+  // Draw threshold line
+  ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 2; ctx.setLineDash([5,3]);
+  ctx.beginPath(); ctx.moveTo(T3W/2, 0); ctx.lineTo(T3W/2, T3H); ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function drawAdaptive() {
+  const ctx = document.getElementById('t3-adaptive').getContext('2d');
+  const out = ctx.createImageData(T3W, T3H);
+  for (let i = 0; i < T3W*T3H; i++) {
+    out.data[i*4] = out.data[i*4+1] = out.data[i*4+2] = t3AdaptData[i];
+    out.data[i*4+3] = 255;
+  }
+  ctx.putImageData(out, 0, 0);
+}
+
+// ═══════════════════════════════════════════
+// TAB 4: IoU
+// ═══════════════════════════════════════════
+let t4Init = false;
+let rA = { x: 80, y: 80, w: 130, h: 100 };
+let rB = { x: 160, y: 100, w: 150, h: 110 };
+let dragging = null, dragOff = {};
+
+function initT4() {
+  t4Init = true;
+  const c = document.getElementById('t4-canvas');
+  c.addEventListener('mousedown', t4Down);
+  c.addEventListener('mousemove', t4Move);
+  c.addEventListener('mouseup', () => dragging = null);
+  c.addEventListener('mouseleave', () => dragging = null);
+  drawIoU(); updateIoU();
+}
+
+function hitRect(px,py,r) { return px>=r.x&&px<=r.x+r.w&&py>=r.y&&py<=r.y+r.h; }
+
+function t4Down(e) {
+  const cr = e.target.getBoundingClientRect();
+  const x=e.clientX-cr.left, y=e.clientY-cr.top;
+  if (hitRect(x,y,rA)) { dragging='A'; dragOff={x:x-rA.x,y:y-rA.y}; }
+  else if (hitRect(x,y,rB)) { dragging='B'; dragOff={x:x-rB.x,y:y-rB.y}; }
+}
+
+function t4Move(e) {
+  const c = document.getElementById('t4-canvas');
+  const cr = c.getBoundingClientRect();
+  const x=e.clientX-cr.left, y=e.clientY-cr.top;
+  if (!dragging) {
+    c.style.cursor = (hitRect(x,y,rA)||hitRect(x,y,rB)) ? 'grab' : 'default';
+    return;
+  }
+  c.style.cursor='grabbing';
+  if (dragging==='A') {
+    rA.x=Math.max(0,Math.min(580-rA.w,x-dragOff.x));
+    rA.y=Math.max(0,Math.min(260-rA.h,y-dragOff.y));
+  } else {
+    rB.x=Math.max(0,Math.min(580-rB.w,x-dragOff.x));
+    rB.y=Math.max(0,Math.min(260-rB.h,y-dragOff.y));
+  }
+  drawIoU(); updateIoU();
+}
+
+function drawIoU() {
+  const ctx = document.getElementById('t4-canvas').getContext('2d');
+  ctx.fillStyle='#f5f8fc'; ctx.fillRect(0,0,580,260);
+
+  const ix=Math.max(rA.x,rB.x), iy=Math.max(rA.y,rB.y);
+  const iw=Math.max(0,Math.min(rA.x+rA.w,rB.x+rB.w)-ix);
+  const ih=Math.max(0,Math.min(rA.y+rA.h,rB.y+rB.h)-iy);
+
+  // A
+  ctx.fillStyle='rgba(0,140,200,0.25)'; ctx.fillRect(rA.x,rA.y,rA.w,rA.h);
+  ctx.strokeStyle='#0077a8'; ctx.lineWidth=2.5; ctx.strokeRect(rA.x,rA.y,rA.w,rA.h);
+  ctx.fillStyle='#0077a8'; ctx.font='bold 14px sans-serif';
+  ctx.fillText('预测框 A', rA.x+6, rA.y+18);
+
+  // B
+  ctx.fillStyle='rgba(230,120,0,0.25)'; ctx.fillRect(rB.x,rB.y,rB.w,rB.h);
+  ctx.strokeStyle='#e67e00'; ctx.lineWidth=2.5; ctx.strokeRect(rB.x,rB.y,rB.w,rB.h);
+  ctx.fillStyle='#e67e00'; ctx.font='bold 14px sans-serif';
+  ctx.fillText('正确答案 B', rB.x+6, rB.y+18);
+
+  // Intersection
+  if (iw>0&&ih>0) {
+    ctx.fillStyle='rgba(0,180,80,0.5)'; ctx.fillRect(ix,iy,iw,ih);
+    ctx.fillStyle='#155a28'; ctx.font='bold 13px sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText('重叠', ix+iw/2, iy+ih/2+5);
+    ctx.textAlign='left';
+  }
+}
+
+function updateIoU() {
+  const ix=Math.max(rA.x,rB.x), iy=Math.max(rA.y,rB.y);
+  const iw=Math.max(0,Math.min(rA.x+rA.w,rB.x+rB.w)-ix);
+  const ih=Math.max(0,Math.min(rA.y+rA.h,rB.y+rB.h)-iy);
+  const inter=iw*ih;
+  const union=rA.w*rA.h + rB.w*rB.h - inter;
+  const iou = union>0 ? inter/union : 0;
+
+  document.getElementById('t4-inter').textContent = inter;
+  document.getElementById('t4-union').textContent = union;
+  const iouEl = document.getElementById('t4-iou');
+  iouEl.textContent = iou.toFixed(2);
+  const card = document.getElementById('t4-iou-card');
+  card.className = 'iou-stat highlight';
+  let grade, cls;
+  if (iou >= 0.75) { grade='优秀 🎯'; cls='good'; }
+  else if (iou >= 0.5) { grade='合格 ✓'; cls='good'; }
+  else if (iou >= 0.25) { grade='偏低 ⚠'; cls=''; }
+  else { grade='很差 ✗'; cls='bad'; }
+  if (cls) card.classList.add(cls);
+  document.getElementById('t4-grade').textContent = grade;
+}
+
+// ═══════════════════════════════════════════
+// TAB 5: 三种分割对比
+// ═══════════════════════════════════════════
+let t5Init = false, t5Mode = 'original';
+const T5W=600, T5H=260;
+
+const SCENE = {
+  sky:    { y: 0,   h: 0.35 },
+  ground: { y: 0.35, h: 0.25 },
+  road:   { y: 0.60, h: 0.40 },
+  people: [
+    { cx: 0.18, cy: 0.58, rx: 0.06, ry: 0.14 },
+    { cx: 0.50, cy: 0.55, rx: 0.06, ry: 0.14 },
+    { cx: 0.80, cy: 0.60, rx: 0.06, ry: 0.14 },
+  ]
+};
+
+const COLORS = {
+  original: {
+    sky:'#87CEEB', ground:'#8ec46a', road:'#9e9e9e',
+    people:['#f4a460','#f4a460','#f4a460'], label: ''
+  },
+  semantic: {
+    sky:'#00CED1', ground:'#2e8b57', road:'#9370db',
+    people:['#e57373','#e57373','#e57373'], label: ''
+  },
+  instance: {
+    sky:'#00CED1', ground:'#2e8b57', road:'#9370db',
+    people:['#e53935','#fb8c00','#8e24aa'], label: ''
+  }
+};
+
+const DESCS = {
+  original: '原始图像',
+  semantic: '语义分割 — 告诉你每个区域"是什么类别"',
+  instance: '实例分割 — 还区分同类中的"第几个"'
+};
+const EXPLAINS = {
+  original: '这是一张普通场景图：天空、草地、道路，加上三个行人',
+  semantic: '所有行人被标成同一种颜色（person），背景区域也按类别上色',
+  instance: '每个行人用不同颜色区分（人₁ 人₂ 人₃），可以分辨出是哪一个'
+};
+
+function initT5() {
+  t5Init = true;
+  document.querySelectorAll('.type-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.type-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      t5Mode = b.dataset.type;
+      document.getElementById('t5-desc').textContent = DESCS[t5Mode];
+      document.getElementById('t5-explain').textContent = EXPLAINS[t5Mode];
+      drawScene();
+    });
+  });
+  drawScene();
+}
+
+function drawScene() {
+  const ctx = document.getElementById('t5-canvas').getContext('2d');
+  const C = COLORS[t5Mode];
+  ctx.clearRect(0,0,T5W,T5H);
+
+  // sky
+  ctx.fillStyle = C.sky;
+  ctx.fillRect(0, 0, T5W, T5H*SCENE.sky.h);
+  // ground
+  ctx.fillStyle = C.ground;
+  ctx.fillRect(0, T5H*SCENE.ground.y, T5W, T5H*SCENE.ground.h);
+  // road
+  ctx.fillStyle = C.road;
+  ctx.fillRect(0, T5H*SCENE.road.y, T5W, T5H*SCENE.road.h);
+
+  // Semantic labels on background
+  if (t5Mode === 'semantic' || t5Mode === 'instance') {
+    ctx.font = '13px sans-serif'; ctx.fillStyle = 'rgba(255,255,255,0.85)';
+    ctx.textAlign = 'center';
+    ctx.fillText('sky', T5W/2, T5H*0.17);
+    ctx.fillText('ground', T5W/2, T5H*0.47);
+    ctx.fillText('road', T5W/2, T5H*0.82);
+  }
+
+  // People
+  SCENE.people.forEach((p, i) => {
+    const px = p.cx * T5W, py = p.cy * T5H;
+    const rx = p.rx * T5W, ry = p.ry * T5H;
+
+    // Body
+    ctx.beginPath();
+    ctx.ellipse(px, py, rx, ry, 0, 0, Math.PI*2);
+    ctx.fillStyle = C.people[i];
+    ctx.fill();
+    ctx.strokeStyle = t5Mode==='instance' ? '#fff' : 'rgba(0,0,0,0.2)';
+    ctx.lineWidth = t5Mode==='instance' ? 2.5 : 1;
+    ctx.stroke();
+
+    // Head
+    ctx.beginPath();
+    ctx.arc(px, py - ry*0.85, rx*0.55, 0, Math.PI*2);
+    ctx.fillStyle = t5Mode==='original' ? '#ffca9a' : C.people[i];
+    ctx.fill();
+    ctx.stroke();
+
+    // Label
+    if (t5Mode === 'semantic') {
+      ctx.fillStyle='#fff'; ctx.font='bold 11px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('person', px, py+5);
+    } else if (t5Mode === 'instance') {
+      ctx.fillStyle='#fff'; ctx.font='bold 13px sans-serif'; ctx.textAlign='center';
+      ctx.fillText('人'+['₁','₂','₃'][i], px, py+5);
+    }
+  });
+
+  ctx.textAlign = 'left';
+}
+
+// ── Init based on URL hash (e.g. segmentation_demo.html#t3) ──
+const startTab = window.location.hash.replace('#','') || 't1';
+switchTab(startTab);
+</script>
+</body>
+</html>
